@@ -1,0 +1,5 @@
+kafkaImage: bitnami/kafka:latest
+producerImage: earthquake-producer:latest
+consumerImage: localhost:5000/earthquake-consumer:latest
+webImage: localhost:5000/earthquake-web:latest
+#webImage: earthquake-web:latest

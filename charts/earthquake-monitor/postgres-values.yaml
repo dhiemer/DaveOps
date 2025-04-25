@@ -1,0 +1,9 @@
+auth:
+  username: earthquake
+  password: quakepass
+  database: quakesdb
+
+primary:
+  persistence:
+    enabled: true
+    size: 1Gi
