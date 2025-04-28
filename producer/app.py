@@ -8,7 +8,8 @@ producer = KafkaProducer(
 
 while True:
     try:
-        res = requests.get('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.geojson')
+        res = requests.get('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson')
+        #res = requests.get('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.geojson')
         data = res.json()['features']
         for quake in data:
             producer.send('earthquakes', quake)

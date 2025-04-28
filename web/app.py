@@ -29,12 +29,12 @@ def index():
 def data_json():
     conn = get_db_connection()
     cur = conn.cursor()
-    cur.execute('SELECT latitude, longitude, magnitude, place FROM quakes ORDER BY id DESC LIMIT 100')
+    cur.execute('SELECT latitude, longitude, magnitude, place, time FROM quakes ORDER BY time DESC LIMIT 100')
     rows = cur.fetchall()
     conn.close()
 
     features = []
-    for lat, lon, mag, place in rows:
+    for lat, lon, mag, place, quake_time in rows:
         features.append({
             "geometry": {
                 "type": "Point",
@@ -42,7 +42,8 @@ def data_json():
             },
             "properties": {
                 "mag": mag,
-                "place": place
+                "place": place,
+                "time": quake_time.isoformat()  # 💥 Use actual earthquake time
             }
         })
 
