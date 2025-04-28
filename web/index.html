@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="utf-8">
   <title>Earthquake Monitor</title>
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
@@ -12,20 +12,26 @@
       margin: 0;
       padding: 0;
     }
-    #map { height: 70vh; }
-    #quake-list {
-      padding: 10px;
-      background: #f9f9f9;
-      overflow: auto;
-      max-height: 30vh;
-      font-size: 1em;
+    #map {
+      height: 70vh;
     }
-    #quake-list ul {
-      list-style-type: none;
-      padding: 0;
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      font-size: 0.9em;
     }
-    #quake-list li {
-      margin-bottom: 5px;
+    th, td {
+      padding: 8px;
+      text-align: center;
+      border-bottom: 1px solid #ddd;
+    }
+    th {
+      background-color: #f2f2f2;
+      cursor: pointer;
+    }
+    tr:hover {
+      background-color: #f5f5f5;
     }
   </style>
 </head>
@@ -35,7 +41,20 @@
   <div id="map"></div>
 
   <h2 style="text-align:center;">Recent Earthquakes</h2>
-  <div id="quake-list">(Loading...)</div>
+  <div style="overflow-x:auto;">
+    <table id="quake-table">
+      <thead>
+        <tr>
+          <th onclick="sortTable(0)">Time (UTC)</th>
+          <th onclick="sortTable(1)">Location</th>
+          <th onclick="sortTable(2)">Magnitude</th>
+        </tr>
+      </thead>
+      <tbody id="quake-tbody">
+        <tr><td colspan="3">(Loading...)</td></tr>
+      </tbody>
+    </table>
+  </div>
 
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
   <script>
@@ -48,45 +67,73 @@
     fetch("/data.json")
       .then(response => response.json())
       .then(data => {
-        const listContainer = document.getElementById('quake-list');
-        const ul = document.createElement('ul');
+        const markers = {};
+        const uniqueQuakes = {};
 
         data.forEach(quake => {
-          if (!quake.geometry || !quake.geometry.coordinates) {
-            console.error('Missing coordinates for quake', quake);
-            return;
-          }
-
-          const [lon, lat] = quake.geometry.coordinates;
+          const lat = quake.geometry?.coordinates[1];
+          const lon = quake.geometry?.coordinates[0];
           const mag = quake.properties?.mag || 'N/A';
           const place = quake.properties?.place || 'Unknown location';
+          const time = quake.properties?.time || Date.now();
+          const id = quake.id || `${lat},${lon},${time}`;
 
-          if (lat == null || lon == null) {
-            console.error('Missing lat/lon', quake);
-            return;
+          if (lat != null && lon != null && !uniqueQuakes[id]) {
+            uniqueQuakes[id] = { lat, lon, mag, place, time };
+
+            const marker = L.circleMarker([lat, lon], {
+              radius: Math.max(4, mag * 2),
+              color: mag >= 5 ? 'red' : 'blue',
+              fillColor: mag >= 5 ? 'red' : 'blue',
+              fillOpacity: 0.7
+            }).addTo(map);
+
+            marker.bindPopup(`<strong>${place}</strong><br>Magnitude: ${mag}<br>Time: ${new Date(time).toUTCString()}`);
+
+            markers[id] = marker;
           }
-
-          const marker = L.circleMarker([lat, lon], {
-            radius: Math.max(4, mag * 2),
-            color: mag >= 5 ? 'red' : 'blue',
-            fillColor: mag >= 5 ? 'red' : 'blue',
-            fillOpacity: 0.7
-          }).addTo(map);
-
-          marker.bindPopup(`<strong>${place}</strong><br>Magnitude: ${mag}`);
-
-          const li = document.createElement('li');
-          li.textContent = `📍 ${place} - Magnitude ${mag}`;
-          ul.appendChild(li);
         });
 
-        listContainer.innerHTML = "";
-        listContainer.appendChild(ul);
+        // Now sort uniqueQuakes by most recent time
+        const sortedQuakes = Object.values(uniqueQuakes).sort((a, b) => b.time - a.time);
+
+        const tbody = document.getElementById('quake-tbody');
+        tbody.innerHTML = "";
+        sortedQuakes.forEach(q => {
+          const row = document.createElement('tr');
+          row.innerHTML = `
+            <td>${new Date(q.time).toUTCString()}</td>
+            <td>${q.place}</td>
+            <td>${q.mag}</td>
+          `;
+          tbody.appendChild(row);
+        });
       })
       .catch(error => {
         console.error('Error loading earthquake data:', error);
-        document.getElementById('quake-list').textContent = "Failed to load data.";
+        const tbody = document.getElementById('quake-tbody');
+        tbody.innerHTML = "<tr><td colspan='3'>Failed to load data.</td></tr>";
       });
+
+    // Basic table sorting
+    function sortTable(col) {
+      const table = document.getElementById("quake-table");
+      const rows = Array.from(table.rows).slice(1); // skip header
+      let asc = table.getAttribute("data-sort-dir") !== "asc"; // toggle
+      rows.sort((a, b) => {
+        const valA = a.cells[col].innerText;
+        const valB = b.cells[col].innerText;
+        if (col === 0) {
+          return asc ? new Date(valA) - new Date(valB) : new Date(valB) - new Date(valA);
+        } else if (col === 2) {
+          return asc ? parseFloat(valA) - parseFloat(valB) : parseFloat(valB) - parseFloat(valA);
+        } else {
+          return asc ? valA.localeCompare(valB) : valB.localeCompare(valA);
+        }
+      });
+      rows.forEach(row => table.tBodies[0].appendChild(row));
+      table.setAttribute("data-sort-dir", asc ? "asc" : "desc");
+    }
   </script>
 
 </body>
