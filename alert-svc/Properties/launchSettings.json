@@ -1,0 +1,11 @@
+﻿{
+  "profiles": {
+    "alert_svc": {
+      "commandName": "Project",
+      "dotnetRunMessages": true,
+      "environmentVariables": {
+        "DOTNET_ENVIRONMENT": "Development"
+      }
+    }
+  }
+}
