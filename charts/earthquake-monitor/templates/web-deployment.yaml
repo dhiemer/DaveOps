@@ -15,20 +15,13 @@ spec:
       volumes:
         - name: data-volume
           emptyDir: { }
-        - name: nginx-config
-          configMap:
-            name: nginx-config
+        #- name: nginx-config
+        #  configMap:
+        #    name: nginx-config
       containers:
         - name: web
           image: {{ .Values.webImage }}
           imagePullPolicy: Always
-          volumeMounts:
-            - name: data-volume
-              mountPath: /usr/share/nginx/html/data.json
-              subPath: data.json
-            - name: nginx-config
-              mountPath: /etc/nginx/nginx.conf
-              subPath: nginx.conf
           env:
             - name: DB_HOST
               value: earthquake-postgres-postgresql.default.svc.cluster.local
@@ -43,7 +36,6 @@ spec:
                 secretKeyRef:
                   name: earthquake-postgres-postgresql
                   key: postgres-password
-
 ---
 apiVersion: v1
 kind: Service

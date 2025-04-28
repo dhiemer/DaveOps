@@ -3,10 +3,9 @@ FROM python:3.11-slim
 WORKDIR /app
 
 COPY app.py .
-COPY static/ /usr/share/nginx/html/
+COPY index.html .
+COPY requirements.txt .
 
-RUN pip install flask psycopg2-binary
-
-ENV FLASK_APP=app.py
+RUN pip install -r requirements.txt
 
 CMD ["python", "app.py"]

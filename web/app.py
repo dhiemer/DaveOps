@@ -1,37 +1,50 @@
-from flask import Flask, jsonify, send_from_directory
+from flask import Flask, jsonify, Response
 import psycopg2
+import json
 import os
 
-app = Flask(__name__, static_folder='/usr/share/nginx/html', static_url_path='')
+app = Flask(__name__)
+
+DB_HOST = os.getenv('DB_HOST')
+DB_PORT = os.getenv('DB_PORT')
+DB_NAME = os.getenv('DB_NAME')
+DB_USER = os.getenv('DB_USER')
+DB_PASSWORD = os.getenv('DB_PASSWORD')
 
 def get_db_connection():
     return psycopg2.connect(
-        host=os.environ.get('DB_HOST', 'earthquake-postgres-postgresql.default.svc.cluster.local'),
-        database=os.environ.get('DB_NAME', 'postgres'),
-        user=os.environ.get('DB_USER', 'postgres'),  
-        password=os.environ.get('DB_PASSWORD', 'changeme'),
-        port=int(os.environ.get('DB_PORT', 5432))
+        host=DB_HOST,
+        port=DB_PORT,
+        dbname=DB_NAME,
+        user=DB_USER,
+        password=DB_PASSWORD
     )
 
 @app.route('/')
-def home():
-    return send_from_directory(app.static_folder, 'index.html')
+def index():
+    with open('/app/index.html') as f:
+        return Response(f.read(), mimetype='text/html')
 
-@app.route('/data.json', strict_slashes=False)  # <-- ✅ FIXED here
+@app.route('/data.json')
 def data_json():
     conn = get_db_connection()
     cur = conn.cursor()
-    cur.execute('SELECT timestamp, location, magnitude FROM quakes ORDER BY timestamp DESC LIMIT 10')
+    cur.execute('SELECT latitude, longitude, magnitude, place FROM quakes ORDER BY id DESC LIMIT 100')
     rows = cur.fetchall()
-    cur.close()
     conn.close()
 
-    features = [{
-        "properties": {
-            "place": row[1],
-            "mag": row[2]
-        }
-    } for row in rows]
+    features = []
+    for lat, lon, mag, place in rows:
+        features.append({
+            "geometry": {
+                "type": "Point",
+                "coordinates": [lon, lat]
+            },
+            "properties": {
+                "mag": mag,
+                "place": place
+            }
+        })
 
     return jsonify(features)
 

@@ -1,0 +1,4 @@
+kubectl port-forward svc/web 8080:80
+
+
+

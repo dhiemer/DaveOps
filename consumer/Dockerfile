@@ -4,6 +4,6 @@ WORKDIR /app
 
 COPY app.py .
 
-RUN pip install kafka-python psycopg2-binary
+RUN pip install kafka-python psycopg2-binary requests
 
 CMD ["python", "app.py"]

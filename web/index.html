@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Earthquake Monitor</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    #map { height: 70vh; }
+    #quake-list {
+      padding: 10px;
+      background: #f9f9f9;
+      overflow: auto;
+      max-height: 30vh;
+      font-size: 1em;
+    }
+    #quake-list ul {
+      list-style-type: none;
+      padding: 0;
+    }
+    #quake-list li {
+      margin-bottom: 5px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1 style="text-align:center;">🌎 Earthquake Monitor</h1>
+  <div id="map"></div>
+
+  <h2 style="text-align:center;">Recent Earthquakes</h2>
+  <div id="quake-list">(Loading...)</div>
+
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script>
+    const map = L.map('map').setView([20, 0], 2);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
+
+    fetch("/data.json")
+      .then(response => response.json())
+      .then(data => {
+        const listContainer = document.getElementById('quake-list');
+        const ul = document.createElement('ul');
+
+        data.forEach(quake => {
+          if (!quake.geometry || !quake.geometry.coordinates) {
+            console.error('Missing coordinates for quake', quake);
+            return;
+          }
+
+          const [lon, lat] = quake.geometry.coordinates;
+          const mag = quake.properties?.mag || 'N/A';
+          const place = quake.properties?.place || 'Unknown location';
+
+          if (lat == null || lon == null) {
+            console.error('Missing lat/lon', quake);
+            return;
+          }
+
+          const marker = L.circleMarker([lat, lon], {
+            radius: Math.max(4, mag * 2),
+            color: mag >= 5 ? 'red' : 'blue',
+            fillColor: mag >= 5 ? 'red' : 'blue',
+            fillOpacity: 0.7
+          }).addTo(map);
+
+          marker.bindPopup(`<strong>${place}</strong><br>Magnitude: ${mag}`);
+
+          const li = document.createElement('li');
+          li.textContent = `📍 ${place} - Magnitude ${mag}`;
+          ul.appendChild(li);
+        });
+
+        listContainer.innerHTML = "";
+        listContainer.appendChild(ul);
+      })
+      .catch(error => {
+        console.error('Error loading earthquake data:', error);
+        document.getElementById('quake-list').textContent = "Failed to load data.";
+      });
+  </script>
+
+</body>
+</html>

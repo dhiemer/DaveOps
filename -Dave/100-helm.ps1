@@ -159,3 +159,34 @@ kubectl exec -it consumer-66b764655d-zbcfh -- printenv | Select-String "DB_PASSW
 
 http://localhost:8080/
 
+
+
+# Rebuild Web
+docker build -t localhost:5000/earthquake-web:latest ./web
+docker push localhost:5000/earthquake-web:latest
+helm upgrade --install earthquake-monitor ./charts/earthquake-monitor
+kubectl delete pod -l app=web
+kubectl get pods
+
+
+# Rebuild consumer
+docker build -t localhost:5000/earthquake-consumer:latest ./consumer
+docker push localhost:5000/earthquake-consumer:latest
+helm upgrade --install earthquake-monitor ./charts/earthquake-monitor
+kubectl delete pod -l app=consumer
+kubectl get pods
+
+
+MiWx9oYY8U
+
+############
+# Rebuild 
+docker build -t localhost:5000/earthquake-web:latest ./web
+docker push localhost:5000/earthquake-web:latest
+docker build -t localhost:5000/earthquake-consumer:latest ./consumer
+docker push localhost:5000/earthquake-consumer:latest
+helm upgrade --install earthquake-monitor ./charts/earthquake-monitor
+kubectl delete pod -l app=consumer
+kubectl delete pod -l app=web
+kubectl get pods
+kubectl port-forward svc/web 8080:80
