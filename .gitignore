@@ -405,6 +405,7 @@ Terraform/.terraform.lock.hcl
 Terraform/.terraform.tfstate.lock.info
 terraform.tfstate
 terraform.tfstate.backup
+*.tfstate*
 
 *.Notes
 *.notes
