@@ -14,5 +14,8 @@ spec:
     spec:
       containers:
         - name: producer
-          image: {{ .Values.producerImage }}
-          imagePullPolicy: Always
+          image: "{{ .Values.ecr_repository }}/{{ .Values.producer.name }}:{{ .Values.producer.tag }}"
+          imagePullPolicy: {{ .Values.producer.pullPolicy }}
+
+
+

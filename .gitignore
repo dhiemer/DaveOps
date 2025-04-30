@@ -400,4 +400,9 @@ FodyWeavers.xsd
 *.sln.iml
 
 _Dave/
+Terraform/.terraform/
+Terraform/.terraform.lock.hcl
 
+*.Notes
+*.notes
+Notes

@@ -20,8 +20,8 @@ spec:
         #    name: nginx-config
       containers:
         - name: web
-          image: {{ .Values.webImage }}
-          imagePullPolicy: Always
+          image: "{{ .Values.ecr_repository }}/{{ .Values.web.name }}:{{ .Values.web.tag }}"
+          imagePullPolicy: {{ .Values.web.pullPolicy }}
           env:
             - name: DB_HOST
               value: earthquake-postgres-postgresql.default.svc.cluster.local

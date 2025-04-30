@@ -14,8 +14,8 @@ spec:
     spec:
       containers:
         - name: consumer
-          image: {{ .Values.consumerImage }}
-          imagePullPolicy: Always
+          image: "{{ .Values.ecr_repository }}/{{ .Values.consumer.name }}:{{ .Values.consumer.tag }}"
+          imagePullPolicy: {{ .Values.consumer.pullPolicy }}
           volumeMounts:
             - name: shared-data
               mountPath: /data

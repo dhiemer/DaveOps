@@ -1,21 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: alert-dispatcher-svc
+  name: quake-detector-svc
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: alert-dispatcher-svc
+      app: quake-detector-svc
   template:
     metadata:
       labels:
-        app: alert-dispatcher-svc
+        app: quake-detector-svc
     spec:
       containers:
-        - name: alert-dispatcher-svc
-          image: localhost:5000/alert-dispatcher-svc:latest
-          imagePullPolicy: Always
+        - name: quake-detector-svc
+          image: "{{ .Values.ecr_repository }}/{{ .Values.quake-detector-svc.name }}:{{ .Values.quake-detector-svc.tag }}"
+          imagePullPolicy: {{ .Values.quake-detector-svc.pullPolicy }}
           env:
             - name: KAFKA_BOOTSTRAP_SERVERS
               value: kafka:9092
@@ -31,3 +31,5 @@ spec:
               value: "steezyalerts@gmail.com,hiemer.david@gmail.com"
           ports:
             - containerPort: 80
+
+
