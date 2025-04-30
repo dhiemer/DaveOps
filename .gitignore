@@ -403,6 +403,8 @@ _Dave/
 Terraform/.terraform/
 Terraform/.terraform.lock.hcl
 Terraform/.terraform.tfstate.lock.info
+terraform.tfstate
+terraform.tfstate.backup
 
 *.Notes
 *.notes
