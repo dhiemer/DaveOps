@@ -74,3 +74,4 @@ module "github-oidc" {
   ]
 }
 
+# arn": "arn:aws:iam::032021926264:role/github-oidc-provider-aws
