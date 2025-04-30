@@ -58,6 +58,9 @@ resource "aws_instance" "k3s_server" {
     runner_labels      = "k3s,arm64"
   })
 
+  lifecycle {
+    ignore_changes = [user_data]
+  }
 
 }
 

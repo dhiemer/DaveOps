@@ -56,3 +56,21 @@ resource "aws_iam_role_policy" "github_actions_ecr_push_policy" {
     ]
   })
 }
+
+
+# Create the GitHub OIDC provider and IAM role
+module "github-oidc" {
+  source  = "terraform-module/github-oidc-provider/aws"
+  version = "~> 1"
+
+  create_oidc_provider = true
+  create_oidc_role     = true
+  repositories = ["dhiemer/earthquake-monitor"]
+  
+  # Attach AWS managed policies or your custom policies
+  oidc_role_attach_policies = [
+    aws_iam_policy.kube_inline.arn
+    # other policies needed for workflow
+  ]
+}
+
