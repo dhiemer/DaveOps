@@ -402,6 +402,7 @@ FodyWeavers.xsd
 _Dave/
 Terraform/.terraform/
 Terraform/.terraform.lock.hcl
+Terraform/.terraform.tfstate.lock.info
 
 *.Notes
 *.notes

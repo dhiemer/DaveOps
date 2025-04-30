@@ -53,12 +53,6 @@ data "aws_iam_policy_document" "kube_inline" {
   }
 }
 
-      "ecr:GetAuthorizationToken",
-      "ecr:BatchCheckLayerAvailability",
-      "ecr:GetDownloadUrlForLayer",
-      "ecr:BatchGetImage",
-
-
 ##################################
 # Policy Attachments
 

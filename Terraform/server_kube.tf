@@ -51,16 +51,13 @@ resource "aws_instance" "k3s_server" {
     Name = "DaveOps-k3s_server"
   }
 
-  user_data = templatefile("${path.module}/userdata.tpl", {
-    repo_url           = var.github_repo
+  user_data = templatefile("${path.module}/server_kube_userdata.tpl", {
+    repo_url           = "https://github.com/dhiemer/earthquake-monitor"
     registration_token = data.github_actions_registration_token.runner.token
     runner_name        = "k3s-runner-1"
     runner_labels      = "k3s,arm64"
   })
 
-  tags = {
-    Name = "k3s with github runner"
-  }
 
 }
 
