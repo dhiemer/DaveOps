@@ -25,11 +25,12 @@ chown -R ec2-user:ec2-user /actions-runner
 sudo -u ec2-user ./config.sh --url "${repo_url}" --token "${registration_token}" --name "${runner_name}" --labels "${runner_labels}" --unattended --replace
 
 # Install and start the runner service
-#sudo -u ec2-user ./svc.sh install
-#sudo -u ec2-user ./svc.sh start
-./svc.sh install
-./svc.sh start
-./svc.sh status
+sudo -u ec2-user ./svc.sh install
+sudo -u ec2-user ./svc.sh start
+sudo -u ec2-user ./svc.sh status
+#./svc.sh install
+#./svc.sh start
+#./svc.sh status
 
 
 # Install SSM Agent

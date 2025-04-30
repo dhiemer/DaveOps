@@ -1,6 +1,8 @@
 name: runner-test
-on: 
-  workflow_dispatch:
+on:
+  push:
+    branches:
+      - aws
 
 jobs:
   test:
