@@ -4,6 +4,15 @@ resource "aws_security_group" "nat" {
   vpc_id      = aws_vpc.main.id
 
 
+
+  ingress {
+    description = "private subnet"
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["10.0.3.0/24"]
+  }
+
   ingress {
     description = "HTTP"
     from_port   = 80
@@ -35,7 +44,7 @@ resource "aws_security_group" "nat" {
 # Elastic Public IP
 resource "aws_eip" "nat" {
   domain = "vpc"
-  
+
   tags = {
     Name = "TEMP-nat-eip"
   }
@@ -56,7 +65,7 @@ resource "aws_network_interface" "nat" {
 
 # Associate Public IP to ENI
 resource "aws_eip_association" "nat" {
-  allocation_id = aws_eip.nat.id
+  allocation_id        = aws_eip.nat.id
   network_interface_id = aws_network_interface.nat.id
 }
 
@@ -74,7 +83,7 @@ resource "aws_instance" "nat" {
     device_index         = 0
   }
 
-user_data = <<-EOF
+  user_data = <<-EOF
     #!/bin/bash
     yum update -y
     cd /tmp
@@ -119,6 +128,14 @@ user_data = <<-EOF
     systemctl stop gssproxy
     systemctl disable gssproxy
   EOF
+
+
+  metadata_options {
+    http_endpoint               = "enabled"
+    http_put_response_hop_limit = 1
+    http_tokens                 = "required"
+    instance_metadata_tags      = "enabled"
+  }
 
   tags = {
     Name = "nat-instance"
