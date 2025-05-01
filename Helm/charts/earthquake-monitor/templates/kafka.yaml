@@ -16,6 +16,12 @@ spec:
         - name: kafka
           image: bitnami/kafka:latest
           env:
+            - name: KAFKA_CFG_KRAFT_MODE
+              value: "false"
+            - name: KAFKA_CFG_PROCESS_ROLES
+              value: "broker"
+            - name: KAFKA_CFG_BROKER_ID
+              value: "0"
             - name: KAFKA_CFG_ZOOKEEPER_CONNECT
               value: "zookeeper:2181"
             - name: ALLOW_PLAINTEXT_LISTENER
@@ -24,25 +30,9 @@ spec:
               value: "PLAINTEXT://:9092"
             - name: KAFKA_CFG_ADVERTISED_LISTENERS
               value: "PLAINTEXT://kafka:9092"
+            - name: KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP
+              value: "PLAINTEXT:PLAINTEXT"
+            - name: BITNAMI_DEBUG
+              value: "true"  # Optional: for more verbose logs
           ports:
             - containerPort: 9092
-
-
-
-#          env:
-#            - name: KAFKA_CFG_KRAFT_MODE
-#              value: "false"
-#            - name: KAFKA_CFG_PROCESS_ROLES
-#              value: "broker"
-#            - name: KAFKA_CFG_BROKER_ID
-#              value: "0"
-#            - name: KAFKA_CFG_ZOOKEEPER_CONNECT
-#              value: "zookeeper:2181"
-#            - name: ALLOW_PLAINTEXT_LISTENER
-#              value: "yes"
-#            - name: KAFKA_CFG_LISTENERS
-#              value: "PLAINTEXT://:9092"
-#            - name: KAFKA_CFG_ADVERTISED_LISTENERS
-#              value: "PLAINTEXT://kafka:9092"
-#            - name: KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP
-#              value: "PLAINTEXT:PLAINTEXT"
