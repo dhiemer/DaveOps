@@ -6,6 +6,48 @@ on:
       - aws
 
 jobs:
+########################################################
+#   
+#   ██████╗ ██╗   ██╗██╗██╗     ██████╗ 
+#   ██╔══██╗██║   ██║██║██║     ██╔══██╗
+#   ██████╔╝██║   ██║██║██║     ██║  ██║
+#   ██╔══██╗██║   ██║██║██║     ██║  ██║
+#   ██████╔╝╚██████╔╝██║███████╗██████╔╝
+#   ╚═════╝  ╚═════╝ ╚═╝╚══════╝╚═════╝ 
+# 
+########################################################
+
+
+  build-web:
+    runs-on: ubuntu-latest
+
+    permissions:
+      id-token: write
+      contents: read
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: arn:aws:iam::032021926264:role/github-oidc-provider-aws
+          aws-region: us-east-1
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
+      - name: Build and Push [web] image to ECR
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REPOSITORY: web
+          IMAGE_TAG: latest
+          #IMAGE_TAG: ${{ github.sha }}
+        run: |
+          docker buildx build --platform linux/arm64 --tag $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG --push ./Application/$ECR_REPOSITORY
+
+
 
 ########################################################
 #   
@@ -20,6 +62,7 @@ jobs:
   deploy:
     #runs-on: self-hosted
     runs-on: [self-hosted, Linux, ARM64, k3s]
+    needs: [build-web]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3

@@ -59,6 +59,8 @@ resource "aws_lb_target_group" "web" {
     unhealthy_threshold = 2
     timeout             = 3
     interval            = 30
+    matcher             = "200-499"
+
   }
 }
 
@@ -93,4 +95,6 @@ resource "aws_lb_listener" "https" {
 
   #depends_on = [aws_acm_certificate_validation.root_cert_validation,aws_acm_certificate_validation.wildcard_cert_validation]
 }
+
+
 
