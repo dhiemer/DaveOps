@@ -22,12 +22,6 @@ spec:
             limits:
               memory: "1024Mi"
               cpu: "500m"
-          command:
-            - /bin/bash
-            - -c
-            - |
-              kafka-topics.sh --bootstrap-server kafka:9092 --create --if-not-exists --topic earthquakes  --partitions 1 --replication-factor 1
-              kafka-topics.sh --bootstrap-server kafka:9092 --create --if-not-exists --topic quake-alerts --partitions 1 --replication-factor 1
           env:
             - name: KAFKA_CFG_KRAFT_MODE
               value: "true"
@@ -52,6 +46,16 @@ spec:
           ports:
             - containerPort: 9092
             - containerPort: 9093
+          lifecycle:
+            postStart:
+              exec:
+                command:
+                  - /bin/bash
+                  - -c
+                  - |
+                    sleep 10
+                    kafka-topics.sh --bootstrap-server localhost:9092 --create --if-not-exists --topic earthquakes --partitions 1 --replication-factor 1
+                    kafka-topics.sh --bootstrap-server localhost:9092 --create --if-not-exists --topic quake-alerts --partitions 1 --replication-factor 1
 ---
 apiVersion: v1
 kind: Service
