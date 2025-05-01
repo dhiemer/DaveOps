@@ -14,10 +14,9 @@ yum install -y curl tar unzip git wget
 # Set up actions-runner as ec2-user
 runuser -l ec2-user -c "
   mkdir -p ~/actions-runner && cd ~/actions-runner
-  curl -o actions-runner-linux-arm64.tar.gz -L https://github.com/actions/runner/releases/download/v2.313.0/actions-runner-linux-arm64-2.313.0.tar.gz
+  curl -o actions-runner-linux-arm64.tar.gz -L https://github.com/actions/runner/releases/download/v2.308.0/actions-runner-linux-arm64-2.308.0.tar.gz
   tar xzf actions-runner-linux-arm64.tar.gz
 "
-
 # Install and start the service from root,
 # but target ec2-user’s runner directory
 # cd /home/ec2-user/actions-runner
