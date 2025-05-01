@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Welcome to DaveOps</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Nunito', sans-serif;
+      background: #f4f4f4;
+      color: #333;
+    }
+
+    header {
+      background: #FFCC00;
+      padding: 30px 20px;
+      text-align: center;
+      color: #000;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 3em;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    .headshot {
+      text-align: center;
+    }
+
+    .headshot img {
+      width: 160px;
+      border-radius: 50%;
+      border: 5px solid #FFCC00;
+      transition: transform 0.3s ease;
+    }
+
+    .headshot img:hover {
+      transform: rotate(5deg) scale(1.05);
+    }
+
+    section {
+      margin: 40px 0;
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    }
+
+    section h2 {
+      margin-top: 0;
+      color: #D62828;
+    }
+
+    a {
+      color: #0077cc;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      font-size: 0.9em;
+      color: #888;
+    }
+
+    @media screen and (max-width: 600px) {
+      header h1 {
+        font-size: 2em;
+      }
+
+      .headshot img {
+        width: 120px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Welcome to DaveOps</h1>
+    <p>🧱 LEGO-Driven Engineer | Builder of Ideas | Cloud Tamer</p>
+  </header>
+
+  <div class="container">
+    <div class="headshot">
+      <img src="https://upload.wikimedia.org/wikipedia/en/thumb/e/e7/Emmet_Brickowski.png/220px-Emmet_Brickowski.png" alt="Emmet Headshot">
+    </div>
+
+    <section id="about">
+      <h2>👋 About Me</h2>
+      <p>
+        Hi, I'm Dave — a DevOps engineer with a passion for automation, observability, and infrastructure that's as modular as a LEGO set. I love building resilient systems and elegant pipelines, brick by brick.
+      </p>
+    </section>
+
+    <section id="projects">
+      <h2>🛰️ My Project</h2>
+      <p>
+        Check out my real-time earthquake monitoring project:
+        <a href="https://earthquakes.daveops.pro" target="_blank">earthquakes.daveops.pro</a>
+      </p>
+    </section>
+
+    <section id="links">
+      <h2>🔗 Links</h2>
+      <ul>
+        <li><a href="https://github.com/dhiemer" target="_blank">GitHub</a></li>
+        <li><a href="https://linkedin.com/in/david-hiemer" target="_blank">LinkedIn</a></li>
+        <li><a href="mailto:hiemer.david@gmail.com">Email Me</a></li>
+      </ul>
+    </section>
+  </div>
+
+  <footer>
+    &copy; 2025 DaveOps. Everything is awesome.
+  </footer>
+
+</body>
+</html>
