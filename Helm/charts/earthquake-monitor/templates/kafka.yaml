@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: kafka
-          image: bitnami/kafka:3.4.0-debian-11-r0
+          image: bitnami/kafka:latest
           env:
             - name: KAFKA_CFG_ZOOKEEPER_CONNECT
               value: "zookeeper:2181"
