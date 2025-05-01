@@ -14,8 +14,8 @@ spec:
     spec:
       containers:
         - name: alert-dispatcher-svc
-          image: "{{ .Values.ecr_repository }}/{{ .Values."alert-dispatcher-svc".name }}:{{ .Values."alert-dispatcher-svc".tag }}"
-          imagePullPolicy: {{ .Values."alert-dispatcher-svc".pullPolicy }}
+          image: "{{ .Values.ecr_repository }}/{{ .Values.alertdispatchersvc.name }}:{{ .Values.alertdispatchersvc.tag }}"
+          imagePullPolicy: {{ .Values.alertdispatchersvc.pullPolicy }}
           env:
             - name: KAFKA_BOOTSTRAP_SERVERS
               value: kafka:9092

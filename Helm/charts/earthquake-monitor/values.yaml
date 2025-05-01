@@ -21,13 +21,13 @@ web:
   tag: latest
   pullPolicy: Always
 
-quake-detector-svc:
-  name: quake-detector-svc
+quakedetectorsvc:
+  name: quakedetectorsvc
   tag: latest
   pullPolicy: Always
 
-alert-dispatcher-svc:
-  name: alert-dispatcher-svc
+alertdispatchersvc:
+  name: alertdispatchersvc
   tag: latest
   pullPolicy: Always
 

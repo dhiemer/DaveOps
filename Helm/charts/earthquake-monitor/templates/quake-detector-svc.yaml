@@ -14,8 +14,8 @@ spec:
     spec:
       containers:
         - name: quake-detector-svc
-          image: "{{ .Values.ecr_repository }}/{{ .Values."quake-detector-svc".name }}:{{ .Values."quake-detector-svc".tag }}"
-          imagePullPolicy: {{ .Values."quake-detector-svc".pullPolicy }}
+          image: "{{ .Values.ecr_repository }}/{{ .Values.quakedetectorsvc.name }}:{{ .Values.quakedetectorsvc.tag }}"
+          imagePullPolicy: {{ .Values.quakedetectorsvc.pullPolicy }}
           env:
             - name: KAFKA_BOOTSTRAP_SERVERS
               value: kafka:9092
