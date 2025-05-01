@@ -80,7 +80,6 @@ resource "aws_lb_listener" "http" {
   }
 }
 
-# ALB HTTPS Listener
 resource "aws_lb_listener" "https" {
   load_balancer_arn = aws_lb.alb.arn
   port              = 443
@@ -89,12 +88,62 @@ resource "aws_lb_listener" "https" {
   certificate_arn   = aws_acm_certificate.wildcard.arn
 
   default_action {
+    type = "fixed-response"
+    fixed_response {
+      content_type = "text/plain"
+      message_body = "404 Not Found"
+      status_code  = "404"
+    }
+  }
+}
+
+
+resource "aws_lb_target_group" "landing" {
+  name     = "landing-tg"
+  port     = 30081
+  protocol = "HTTP"
+  vpc_id   = aws_vpc.main.id
+
+  health_check {
+    path                = "/"
+    protocol            = "HTTP"
+    port                = "30081"
+    healthy_threshold   = 2
+    unhealthy_threshold = 2
+    timeout             = 3
+    interval            = 30
+    matcher             = "200-499"
+  }
+}
+
+resource "aws_lb_listener_rule" "web_rule" {
+  listener_arn = aws_lb_listener.https.arn
+  priority     = 100
+
+  action {
     type             = "forward"
     target_group_arn = aws_lb_target_group.web.arn
   }
 
-  #depends_on = [aws_acm_certificate_validation.root_cert_validation,aws_acm_certificate_validation.wildcard_cert_validation]
+  condition {
+    host_header {
+      values = ["earthquakes.daveops.pro"]
+    }
+  }
 }
 
+resource "aws_lb_listener_rule" "landing_rule" {
+  listener_arn = aws_lb_listener.https.arn
+  priority     = 200
 
+  action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.landing.arn
+  }
 
+  condition {
+    host_header {
+      values = ["daveops.pro"]
+    }
+  }
+}

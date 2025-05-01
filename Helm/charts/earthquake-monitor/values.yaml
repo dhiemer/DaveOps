@@ -21,6 +21,11 @@ web:
   tag: latest
   pullPolicy: Always
 
+landing:
+  name: landing
+  tag: latest
+  pullPolicy: Always
+
 quakedetectorsvc:
   name: quake-detector-svc
   tag: latest
