@@ -47,14 +47,14 @@ resource "aws_lb" "alb" {
 # ALB Target Group
 resource "aws_lb_target_group" "web" {
   name     = "web-tg"
-  port     = 80
+  port     = 30080
   protocol = "HTTP"
   vpc_id   = aws_vpc.main.id
 
   health_check {
     path                = "/"
     protocol            = "HTTP"
-    port                = "traffic-port"
+    port                = "30080"
     healthy_threshold   = 2
     unhealthy_threshold = 2
     timeout             = 3

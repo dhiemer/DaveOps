@@ -27,6 +27,14 @@ resource "aws_security_group" "kube_sg" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
+  ingress {
+    description = "30080"
+    from_port   = 30080
+    to_port     = 30080
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
   egress {
     from_port   = 0
     to_port     = 0
@@ -42,7 +50,7 @@ resource "aws_security_group" "kube_sg" {
 
 resource "aws_instance" "k3s_server" {
   ami                    = "ami-0bc72bd3b8ba0b59d" # Amazon Linux 23 ARM64
-  instance_type          = "t4g.small"
+  instance_type          = "t4g.medium"
   subnet_id              = aws_subnet.private1.id
   vpc_security_group_ids = [aws_security_group.kube_sg.id]
   iam_instance_profile   = aws_iam_instance_profile.kube_profile.name
