@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: quake-detector-svc
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: quake-detector-svc
+  template:
+    metadata:
+      labels:
+        app: quake-detector-svc
+    spec:
+      containers:
+        - name: quake-detector-svc
+          image: "{{ .Values.ecr_repository }}/{{ .Values.quakedetectorsvc.name }}:{{ .Values.quakedetectorsvc.tag }}"
+          imagePullPolicy: {{ .Values.quakedetectorsvc.pullPolicy }}
+          env:
+            - name: KAFKA_BOOTSTRAP_SERVERS
+              value: kafka:9092
+            - name: SMTP_SERVER
+              value: "smtp.gmail.com"
+            - name: SMTP_PORT
+              value: "587"
+            - name: SMTP_USER
+              value: "steezyalerts@gmail.com"
+            - name: SMTP_PASS
+              value: "rxxaoectekfzboct"
+            - name: ALERT_RECIPIENTS
+              value: "steezyalerts@gmail.com,hiemer.david@gmail.com"
+          ports:
+            - containerPort: 80
+
+

@@ -1,0 +1,4 @@
+apiVersion: v2
+name: earthquake-monitor
+version: 0.1.0
+description: A simple local demo with Kafka, and K8s

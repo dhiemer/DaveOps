@@ -1,0 +1,52 @@
+#apiVersion: v1
+#kind: Secret
+#metadata:
+#  name: postgres-secret
+#type: Opaque
+#stringData:
+#  POSTGRES_DB: quakes
+#  POSTGRES_USER: postgres
+#  POSTGRES_PASSWORD: 
+#
+# Manually create with
+# kubectl create secret generic earthquake-postgres-postgresql \
+#   --from-literal=POSTGRES_DB=quakes \
+#   --from-literal=POSTGRES_USER=postgres \
+#   --from-literal=POSTGRES_PASSWORD=
+# 
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres
+spec:
+  selector:
+    app: postgres
+  ports:
+    - port: 5432
+      targetPort: 5432
+  type: ClusterIP
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres
+  template:
+    metadata:
+      labels:
+        app: postgres
+    spec:
+      containers:
+        - name: earthquake-postgres-postgresql-0
+          image: postgres:14
+          ports:
+            - containerPort: 5432
+          envFrom:
+            - secretRef:
+                name: postgres-secret

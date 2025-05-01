@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: consumer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: consumer
+  template:
+    metadata:
+      labels:
+        app: consumer
+    spec:
+      containers:
+        - name: consumer
+          image: "{{ .Values.ecr_repository }}/{{ .Values.consumer.name }}:{{ .Values.consumer.tag }}"
+          imagePullPolicy: {{ .Values.consumer.pullPolicy }}
+          volumeMounts:
+            - name: shared-data
+              mountPath: /data
+          env:
+            - name: DB_HOST
+              value: postgres
+            - name: DB_PORT
+              value: "5432"
+            - name: DB_NAME
+              value: postgres
+            - name: DB_USER
+              value: postgres
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: earthquake-postgres-postgresql
+                  key: POSTGRES_PASSWORD
+      volumes:
+        - name: shared-data
+          emptyDir: {}
+
