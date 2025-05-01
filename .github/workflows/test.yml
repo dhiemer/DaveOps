@@ -1,12 +1,13 @@
-name: runner-test
-on:
-  push:
-    branches:
-      - aws
-
-jobs:
-  test:
-    runs-on: [self-hosted, Linux, ARM64, k3s]
-    steps:
-      - name: Say hello
-        run: echo "Runner is working!"
+#name: runner-test
+#on:
+#  push:
+#    branches:
+#      - aws
+#
+#jobs:
+#  test:
+#    runs-on: [self-hosted, Linux, ARM64, k3s]
+#    steps:
+#      - name: Say hello
+#        run: echo "Runner is working!"
+#
