@@ -17,11 +17,11 @@ spec:
           image: bitnami/kafka:latest
           resources:
             requests:
+              memory: "256Mi"
+              cpu: "150m"
+            limits:
               memory: "512Mi"
               cpu: "250m"
-            limits:
-              memory: "1024Mi"
-              cpu: "500m"
           env:
             - name: KAFKA_CFG_KRAFT_MODE
               value: "true"
@@ -53,9 +53,16 @@ spec:
                   - /bin/bash
                   - -c
                   - |
-                    sleep 10
-                    kafka-topics.sh --bootstrap-server localhost:9092 --create --if-not-exists --topic earthquakes --partitions 1 --replication-factor 1
-                    kafka-topics.sh --bootstrap-server localhost:9092 --create --if-not-exists --topic quake-alerts --partitions 1 --replication-factor 1
+                    for i in {1..10}; do
+                      kafka-topics.sh --bootstrap-server localhost:9092 --create --if-not-exists --topic earthquakes --partitions 1 --replication-factor 1 && break
+                      echo "Retrying... $i"
+                      sleep 5
+                    done
+                    for i in {1..10}; do
+                      kafka-topics.sh --bootstrap-server localhost:9092 --create --if-not-exists --topic quake-alerts --partitions 1 --replication-factor 1 && break
+                      echo "Retrying... $i"
+                      sleep 5
+                    done
 ---
 apiVersion: v1
 kind: Service
