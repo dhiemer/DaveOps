@@ -20,10 +20,8 @@ yum install -y  tar unzip git wget
 # curl -o actions-runner-linux-arm64-2.323.0.tar.gz -L https://github.com/actions/runner/releases/download/v2.323.0/actions-runner-linux-arm64-2.323.0.tar.gz
 # ls
 # tar xzf ./actions-runner-linux-arm64-2.323.0.tar.gz
-# ./config.sh --url https://github.com/dhiemer/earthquake-monitor --token AHVWTN4MB2I76ATN53NLDALICN4DI
-# sudo dnf install -y libicu zlib krb5-libs curl openssl-libs
 # sudo dnf install -y libicu zlib krb5-libs curl openssl-libs --allowerasing
-# ./config.sh --url https://github.com/dhiemer/earthquake-monitor --token AHVWTN4MB2I76ATN53NLDALICN4DI
+# ./config.sh --url https://github.com/dhiemer/earthquake-monitor --token REDACTED
 # ./svc.sh status
 # sudo ./svc.sh status
 # sudo ./svc.sh install
@@ -39,3 +37,6 @@ systemctl start amazon-ssm-agent
 
 # Install K3s
 curl -sfL https://get.k3s.io | sh -
+
+# chown ec2-user:ec2-user /etc/rancher/k3s/k3s.yaml
+# chmod 600 /etc/rancher/k3s/k3s.yaml
