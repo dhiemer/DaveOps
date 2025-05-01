@@ -21,7 +21,7 @@ spec:
               mountPath: /data
           env:
             - name: DB_HOST
-              value: earthquake-postgres-postgresql.default.svc.cluster.local
+              value: postgres
             - name: DB_PORT
               value: "5432"
             - name: DB_NAME
