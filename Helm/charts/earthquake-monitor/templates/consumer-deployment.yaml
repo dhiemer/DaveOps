@@ -32,7 +32,7 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: earthquake-postgres-postgresql
-                  key: postgres-password
+                  key: POSTGRES_PASSWORD
       volumes:
         - name: shared-data
           emptyDir: {}
