@@ -2,142 +2,180 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>DaveOps - Welcome!</title>
+  <title>DaveOps | LEGO DevOps Fun</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;800&display=swap" rel="stylesheet">
+  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
   <style>
-    * {
-      box-sizing: border-box;
-    }
     body {
       margin: 0;
-      font-family: 'Nunito', sans-serif;
-      background: linear-gradient(to bottom, #f5f7fa, #c3cfe2);
-      color: #222;
-    }
-    header {
-      background-color: #ffd400;
-      padding: 40px 20px;
-      text-align: center;
-      border-bottom: 6px solid #ffaf00;
-    }
-    header h1 {
-      margin: 0;
-      font-size: 3em;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f9f9f9;
       color: #333;
     }
-    .headshot {
-      text-align: center;
-      margin-top: -50px;
+
+    header {
+      background-color: #0066cc;
+      padding: 1em 2em;
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 10;
     }
-    .headshot img {
-      width: 140px;
-      height: 140px;
-      border-radius: 50%;
-      border: 6px solid #fff;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-      background: white;
-      transition: transform 0.3s ease;
-    }
-    .headshot img:hover {
-      transform: scale(1.05);
-    }
-    .container {
-      max-width: 1000px;
-      margin: 40px auto;
-      padding: 0 20px;
-    }
-    section {
-      background: white;
-      border-radius: 12px;
-      padding: 20px 30px;
-      margin-bottom: 30px;
-      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08);
-      transition: transform 0.2s ease;
-    }
-    section:hover {
-      transform: translateY(-2px);
-    }
-    h2 {
-      color: #d62828;
-      margin-top: 0;
-    }
-    p {
-      line-height: 1.6;
-    }
-    a {
-      color: #0077cc;
+
+    nav a {
+      color: white;
       text-decoration: none;
+      margin-left: 1.5em;
       font-weight: bold;
     }
-    a:hover {
-      text-decoration: underline;
+
+    nav a:hover {
+      color: #ffeb3b;
     }
-    .link-list {
-      list-style: none;
-      padding-left: 0;
-    }
-    .link-list li {
-      margin-bottom: 10px;
-    }
-    footer {
+
+    .hero {
+      background: linear-gradient(to right, #f9d423, #ff4e50);
+      padding: 3em 2em;
       text-align: center;
-      padding: 20px;
-      font-size: 0.85em;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero h1 {
+      font-size: 2.5em;
+      margin-bottom: 0.3em;
+      color: #fff;
+    }
+
+    .hero p {
+      font-size: 1.2em;
+      color: #f0f0f0;
+    }
+
+    .icons-wrapper {
+      display: flex;
+      justify-content: center;
+      gap: 2em;
+      margin-top: 2em;
+    }
+
+    .floating-icon {
+      width: 60px;
+      height: 60px;
+      animation: float 3s ease-in-out infinite;
+    }
+
+    .floating-icon:nth-child(2) {
+      animation-delay: 1s;
+    }
+
+    .floating-icon:nth-child(3) {
+      animation-delay: 2s;
+    }
+
+    @keyframes float {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-10px);
+      }
+    }
+
+    .section-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 2em;
+      padding: 2em;
+    }
+
+    .card {
+      flex: 1 1 280px;
+      background: white;
+      border-radius: 12px;
+      padding: 1.5em;
+      box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+    }
+
+    .about { background-color: #fffde7; }
+    .project { background-color: #e3f2fd; }
+    .links { background-color: #e8f5e9; }
+
+    .card h2 {
+      margin-top: 0;
+    }
+
+    footer {
+      background: #eee;
+      padding: 1em;
+      text-align: center;
+      font-size: 0.9em;
       color: #555;
     }
-    @media screen and (max-width: 600px) {
-      header h1 {
-        font-size: 2em;
-      }
-      .headshot img {
-        width: 100px;
-        height: 100px;
-      }
+
+    a {
+      color: #1976d2;
+    }
+
+    a:hover {
+      text-decoration: underline;
     }
   </style>
 </head>
 <body>
 
-  <header>
-    <h1>👋 Welcome to DaveOps</h1>
-    <p>Your friendly neighborhood DevOps LEGO architect</p>
-  </header>
+<header>
+  <div class="logo">🎛️ DaveOps</div>
+  <nav>
+    <a href="#about">About</a>
+    <a href="#projects">Projects</a>
+    <a href="#links">Links</a>
+  </nav>
+</header>
 
-  <div class="headshot">
-    <img src="https://upload.wikimedia.org/wikipedia/en/thumb/e/e7/Emmet_Brickowski.png/220px-Emmet_Brickowski.png" alt="Headshot of Emmet">
+<section class="hero">
+  <h1>🚀 Welcome to DaveOps</h1>
+  <p>DevOps Engineering. LEGO Energy. Cloud Fun.</p>
+  <div class="icons-wrapper">
+    <img src="https://raw.githubusercontent.com/docker/brand-guidelines/master/logos/docker-logo.png" alt="Docker" class="floating-icon" title="Docker" />
+    <img src="https://raw.githubusercontent.com/cncf/artwork/master/projects/kubernetes/icon/color/kubernetes-icon-color.png" alt="Kubernetes" class="floating-icon" title="Kubernetes" />
+    <img src="https://www.terraform.io/images/og-image-8b3e4f7d.png" alt="Terraform" class="floating-icon" title="Terraform" />
   </div>
+</section>
 
-  <main class="container">
-    <section>
-      <h2>🧱 About Me</h2>
-      <p>
-        I'm Dave, a DevOps engineer who builds infrastructure and automation like LEGO masterpieces — one block at a time. I specialize in Kubernetes, AWS, CI/CD pipelines, and making systems fun and reliable.
-      </p>
-    </section>
+<section class="section-container">
+  <div class="card about" id="about">
+    <h2>🧱 About Me</h2>
+    <p>I'm Dave, a DevOps engineer who builds systems like LEGO sets: modular, colorful, and indestructible. I specialize in Kubernetes, CI/CD, observability, and making ops work feel like play.</p>
+  </div>
+  <div class="card project" id="projects">
+    <h2>🌍 Earthquake Monitor</h2>
+    <p>A real-time streaming pipeline powered by Kafka and Kubernetes. See seismic activity visualized across the globe!</p>
+    <p><a href="https://earthquakes.daveops.pro" target="_blank">🌐 Visit earthquakes.daveops.pro</a></p>
+  </div>
+  <div class="card links" id="links">
+    <h2>🔗 Useful Links</h2>
+    <ul>
+      <li><a href="https://github.com/dhiemer" target="_blank">GitHub</a></li>
+      <li><a href="https://linkedin.com/in/davidhiemer" target="_blank">LinkedIn</a></li>
+      <li><a href="mailto:hiemer.david@gmail.com">Email Me</a></li>
+    </ul>
+  </div>
+</section>
 
-    <section>
-      <h2>🌐 My Project</h2>
-      <p>
-        Check out my real-time Earthquake Monitor built on Kafka, Helm, and Kubernetes:
-        <br />
-        👉 <a href="https://earthquakes.daveops.pro" target="_blank">earthquakes.daveops.pro</a>
-      </p>
-    </section>
-
-    <section>
-      <h2>🔗 Links</h2>
-      <ul class="link-list">
-        <li><a href="https://github.com/dhiemer" target="_blank">GitHub</a></li>
-        <li><a href="https://linkedin.com/in/david-hiemer" target="_blank">LinkedIn</a></li>
-        <li><a href="mailto:hiemer.david@gmail.com">Email Me</a></li>
-      </ul>
-    </section>
-  </main>
-
-  <footer>
-    &copy; 2025 DaveOps • Powered by Coffee & Kubernetes 🧃
-  </footer>
+<footer>
+  Made with ❤️ and 💡 by DaveOps &middot; Powered by Kubernetes ☸️ & Docker 🐳
+</footer>
 
 </body>
 </html>
