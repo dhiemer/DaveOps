@@ -47,6 +47,6 @@ jobs:
             --set quake-detector-svc.image.repository=032021926264.dkr.ecr.us-east-1.amazonaws.com/quake-detector-svc --set quake-detector-svc.image.tag=latest \
             --set alert-dispatcher-svc.image.repository=032021926264.dkr.ecr.us-east-1.amazonaws.com/alert-dispatcher-svc --set alert-dispatcher-svc.image.tag=latest \
             --atomic \
-            --timeout 5m
+            --timeout 3m
 
 
