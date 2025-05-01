@@ -23,7 +23,7 @@ spec:
             - name: KAFKA_CFG_NODE_ID
               value: "1"
             - name: KAFKA_KRAFT_CLUSTER_ID
-              value: "yUp2jW5NRoWxExU7vOAZfQ"  # must be a base64 string (any unique one is fine)
+              value: "yUp2jW5NRoWxExU7vOAZfQ"
             - name: KAFKA_CFG_LISTENERS
               value: "PLAINTEXT://:9092,CONTROLLER://:9093"
             - name: KAFKA_CFG_ADVERTISED_LISTENERS
@@ -32,7 +32,10 @@ spec:
               value: "PLAINTEXT:PLAINTEXT,CONTROLLER:PLAINTEXT"
             - name: KAFKA_CFG_CONTROLLER_LISTENER_NAMES
               value: "CONTROLLER"
+            - name: KAFKA_CFG_CONTROLLER_QUORUM_VOTERS
+              value: "1@localhost:9093"
             - name: ALLOW_PLAINTEXT_LISTENER
               value: "yes"
           ports:
             - containerPort: 9092
+            - containerPort: 9093
