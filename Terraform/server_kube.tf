@@ -84,3 +84,12 @@ resource "aws_alb_target_group_attachment" "tg_kube_tgattachment" {
   target_id        = aws_instance.k3s_server.id
 
 }
+
+
+resource "aws_lb_target_group_attachment" "landing" {
+  target_group_arn = aws_lb_target_group.landing.arn
+  target_id        = aws_instance.k3s_server.id
+  port             = 30081
+}
+
+
