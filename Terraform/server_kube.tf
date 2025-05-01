@@ -55,7 +55,7 @@ resource "aws_instance" "k3s_server" {
     repo_url           = "https://github.com/dhiemer/earthquake-monitor"
     registration_token = data.github_actions_registration_token.runner.token
     runner_name        = "k3s-runner-1"
-    runner_labels      = "k3s,arm64"
+    runner_labels      = "k3s,ARM64"
   })
 
   lifecycle {
