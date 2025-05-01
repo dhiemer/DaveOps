@@ -46,32 +46,20 @@ spec:
           ports:
             - containerPort: 9092
             - containerPort: 9093
-          lifecycle:
-            postStart:
-              exec:
-                command:
-                  - /bin/bash
-                  - -c
-                  - |
-                    for i in {1..10}; do
-                      kafka-topics.sh --bootstrap-server localhost:9092 --create --if-not-exists --topic earthquakes --partitions 1 --replication-factor 1 && break
-                      echo "Retrying... $i"
-                      sleep 5
-                    done
-                    for i in {1..10}; do
-                      kafka-topics.sh --bootstrap-server localhost:9092 --create --if-not-exists --topic quake-alerts --partitions 1 --replication-factor 1 && break
-                      echo "Retrying... $i"
-                      sleep 5
-                    done
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: kafka
-spec:
-  selector:
-    app: kafka
-  ports:
-    - protocol: TCP
-      port: 9092
-      targetPort: 9092
+          #lifecycle:
+          #  postStart:
+          #    exec:
+          #      command:
+          #        - /bin/bash
+          #        - -c
+          #        - |
+          #          for i in {1..5}; do
+          #            kafka-topics.sh --bootstrap-server localhost:9092 --create --if-not-exists --topic earthquakes --partitions 1 --replication-factor 1 && break
+          #            echo "Retrying... $i"
+          #            sleep 5
+          #          done
+          #          for i in {1..5}; do
+          #            kafka-topics.sh --bootstrap-server localhost:9092 --create --if-not-exists --topic quake-alerts --partitions 1 --replication-factor 1 && break
+          #            echo "Retrying... $i"
+          #            sleep 5
+          #          done
