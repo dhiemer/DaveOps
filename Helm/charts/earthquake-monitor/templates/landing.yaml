@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: landing
-          image: 032021926264.dkr.ecr.us-east-1.amazonaws.com/landing:latest
+          image: "{{ .Values.ecr_repository }}/{{ .Values.landing.name }}:{{ .Values.landing.tag }}"
           ports:
             - containerPort: 80
 ---
