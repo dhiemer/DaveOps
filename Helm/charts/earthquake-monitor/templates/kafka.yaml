@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: kafka
-          image: bitnami/kafka:3.4.0-debian-11-r3
+          image: bitnami/kafka:latest
           env:
             - name: KAFKA_CFG_KRAFT_MODE
               value: "false"
@@ -30,5 +30,7 @@ spec:
               value: "PLAINTEXT://:9092"
             - name: KAFKA_CFG_ADVERTISED_LISTENERS
               value: "PLAINTEXT://kafka:9092"
+            - name: KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP
+              value: "PLAINTEXT:PLAINTEXT"
           ports:
             - containerPort: 9092
