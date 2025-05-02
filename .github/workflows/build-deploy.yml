@@ -144,8 +144,6 @@ jobs:
         run: |
           export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
           #helm template ./Helm/charts/earthquake-monitor --debug
-          helm uninstall landing
-          helm uninstall web
           helm upgrade --install earthquake-monitor ./Helm/charts/earthquake-monitor \
             --namespace default \
             --set producer.image.repository=032021926264.dkr.ecr.us-east-1.amazonaws.com/producer --set producer.image.tag=${{ github.sha }} \
