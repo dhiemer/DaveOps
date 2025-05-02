@@ -23,7 +23,9 @@ jobs:
   # WEB
   #############
   build-web-main:
-    if: ${{ github.event_name == 'push' && contains(join(github.event.commits.*.modified, '\n'), 'Application/web/main/') }}
+    #if: ${{ github.event_name == 'push' && contains(join(github.event.commits.*.modified, '\n'), 'Application/web/main/') }}
+    #if: ${{ github.event_name == 'push' && contains(join(github.event.head_commit.modified, '\n') || '', 'Application/web/main/') }}
+    if: ${{ github.event_name == 'push' && ( startsWith(join(github.event.head_commit.modified, ','), 'Application/web/main/') || startsWith(join(github.event.head_commit.added, ','), 'Application/web/main/') ) }}
     runs-on: ubuntu-latest
 
     permissions:
