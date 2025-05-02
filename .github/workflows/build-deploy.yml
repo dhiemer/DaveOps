@@ -4,8 +4,6 @@ on:
   push:
     branches:
       - aws
-    paths:
-      - 'Application/**'
 
 jobs:
 ########################################################
