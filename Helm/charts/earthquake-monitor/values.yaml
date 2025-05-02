@@ -28,11 +28,9 @@ alertdispatchersvc:
 
 webmain:
   name: web-main
-  #tag: latest
   pullPolicy: Always
 
 webearthquakes:
   name: web-earthquakes
-  #tag: latest
   pullPolicy: Always
 
