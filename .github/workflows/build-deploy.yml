@@ -1,9 +1,13 @@
-name: Build and Push Docker Image to ECR
+name: Build and Deploy
 
 on:
   push:
     branches:
       - aws
+on:
+  push:
+    paths:
+      - 'Application/**'
 
 jobs:
 ########################################################
@@ -17,8 +21,11 @@ jobs:
 # 
 ########################################################
 
-
-  build-landing:
+  #############
+  # WEB
+  #############
+  build-web-main:
+    if: ${{ github.event_name == 'push' && contains(join(github.event.commits.*.modified, '\n'), 'Application/web/main/') }}
     runs-on: ubuntu-latest
 
     permissions:
@@ -38,14 +45,43 @@ jobs:
       - name: Login to Amazon ECR
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v2
-      - name: Build and Push [landing] image to ECR
+      - name: Build and Push [main] image to ECR
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: landing
-          IMAGE_TAG: latest
-          #IMAGE_TAG: ${{ github.sha }}
+          ECR_REPOSITORY: main
+          IMAGE_TAG: ${{ github.sha }}
         run: |
           docker buildx build --platform linux/arm64 --tag $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG --push ./Application/web/$ECR_REPOSITORY
+
+  build-web-earthquakes:
+    if: ${{ github.event_name == 'push' && contains(join(github.event.commits.*.modified, '\n'), 'Application/web/earthquakes/') }}
+    runs-on: ubuntu-latest
+
+    permissions:
+      id-token: write
+      contents: read
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: arn:aws:iam::032021926264:role/github-oidc-provider-aws
+          aws-region: us-east-1
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
+      - name: Build and Push [earthquakes] image to ECR
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REPOSITORY: earthquakes
+          IMAGE_TAG: ${{ github.sha }}
+        run: |
+          docker buildx build --platform linux/arm64 --tag $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG --push ./Application/web/$ECR_REPOSITORY
+
 
 
 
@@ -60,9 +96,11 @@ jobs:
 #                    
 ########################################################
   deploy:
-    #runs-on: self-hosted
+    needs:
+      - build-web-main
+      - build-web-earthquakes
+    if: ${{ always() && (needs.build-web-main.result == 'success' || needs.build-web-earthquakes.result == 'success' ) }}
     runs-on: [self-hosted, Linux, ARM64, k3s]
-    needs: [build-landing]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -84,13 +122,11 @@ jobs:
           helm template ./Helm/charts/earthquake-monitor --debug
           helm upgrade --install earthquake-monitor ./Helm/charts/earthquake-monitor \
             --namespace default \
-            --set producer.image.repository=032021926264.dkr.ecr.us-east-1.amazonaws.com/producer --set producer.image.tag=latest \
-            --set consumer.image.repository=032021926264.dkr.ecr.us-east-1.amazonaws.com/consumer --set consumer.image.tag=latest \
-            --set web.image.repository=032021926264.dkr.ecr.us-east-1.amazonaws.com/web --set web.image.tag=latest \
-            --set landing.image.repository=032021926264.dkr.ecr.us-east-1.amazonaws.com/landing --set landing.image.tag=latest \
-            --set quake-detector-svc.image.repository=032021926264.dkr.ecr.us-east-1.amazonaws.com/quake-detector-svc --set quake-detector-svc.image.tag=latest \
-            --set alert-dispatcher-svc.image.repository=032021926264.dkr.ecr.us-east-1.amazonaws.com/alert-dispatcher-svc --set alert-dispatcher-svc.image.tag=latest \
+            --set producer.image.repository=032021926264.dkr.ecr.us-east-1.amazonaws.com/producer --set producer.image.tag=${{ github.sha }} \
+            --set consumer.image.repository=032021926264.dkr.ecr.us-east-1.amazonaws.com/consumer --set consumer.image.tag=${{ github.sha }} \
+            --set quake-detector-svc.image.repository=032021926264.dkr.ecr.us-east-1.amazonaws.com/quake-detector-svc --set quake-detector-svc.image.tag=${{ github.sha }} \
+            --set alert-dispatcher-svc.image.repository=032021926264.dkr.ecr.us-east-1.amazonaws.com/alert-dispatcher-svc --set alert-dispatcher-svc.image.tag=${{ github.sha }} \
             --timeout 3m
-          kubectl rollout restart deployment landing
+          #kubectl rollout restart deployment landing
 
 

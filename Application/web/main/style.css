@@ -3,11 +3,12 @@ body {
   margin: 0;
   font-family: 'Nunito', sans-serif;
   background: url('legoback.png') repeat;
+  background-size: 50%;
   color: #111;
 }
 
 header {
-  background: #FFCC00;
+  background: #0753aaec;
   padding: 20px;
   text-align: center;
   color: #000;
@@ -82,7 +83,7 @@ a:hover {
 footer {
   text-align: center;
   padding: 20px;
-  background-color: #FFCC00;
+  background-color: #0753aa;
   color: #333;
   font-size: 0.9em;
   margin-top: 40px;
