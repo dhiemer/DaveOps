@@ -1,0 +1,118 @@
+/* General page styles */
+body {
+  font-family: 'Nunito', sans-serif;
+  margin: 0;
+  padding: 0;
+  background: url('assets/legoback.png') repeat;
+  background-size: 50%; /* Zoomed out background */
+  color: #333;
+}
+
+/* Header styles */
+header {
+  background-color: #007BFF; /* Bright blue */
+  color: white;
+  padding: 1.5rem;
+  text-align: center;
+}
+
+header h1 {
+  margin: 0 0 0.5rem 0;
+  font-size: 2rem;
+  letter-spacing: 2px;
+}
+
+nav a {
+  color: white;
+  margin: 0 15px;
+  font-weight: bold;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+nav a:hover {
+  color: #FFD700; /* Gold on hover */
+}
+
+/* Main content container */
+.main-container {
+  padding: 2rem;
+}
+
+/* Center section with summary */
+.center-section {
+  background-color: #fefefe;
+  border: 2px dashed #007BFF;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  border-radius: 12px;
+  text-align: center;
+}
+
+.center-section h2 {
+  color: #ff3c00; /* Fun red-orange */
+}
+
+/* Tool icons */
+.lego-icons img {
+  width: 60px;
+  margin: 0 10px;
+  transition: transform 0.3s ease-in-out;
+}
+
+.lego-icons img.bouncy:hover {
+  transform: scale(1.2) rotate(-5deg);
+}
+
+/* Three-column layout */
+.three-columns {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+/* Each side section */
+.side-section {
+  flex: 1 1 30%;
+  background-color: #ffffffdd;
+  border-radius: 10px;
+  padding: 1rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.side-section h2 {
+  margin-top: 0;
+  color: #ff6600;
+}
+
+.side-section ul {
+  padding-left: 20px;
+}
+
+/* Footer styles */
+footer {
+  background-color: #007BFF;
+  color: white;
+  text-align: center;
+  padding: 1.5rem;
+  margin-top: 2rem;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+/* Responsive tweaks */
+@media (max-width: 768px) {
+  .three-columns {
+    flex-direction: column;
+  }
+
+  .side-section {
+    flex: 1 1 100%;
+  }
+
+  .lego-icons img {
+    width: 50px;
+    margin-bottom: 10px;
+  }
+}
