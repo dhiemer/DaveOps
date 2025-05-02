@@ -55,7 +55,7 @@ jobs:
       - name: Build and Push [main] image to ECR
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: main
+          ECR_REPOSITORY: web-main
           IMAGE_TAG: ${{ github.sha }}
         run: |
           docker buildx build --platform linux/arm64 --tag $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG --push ./Application/web/$ECR_REPOSITORY
@@ -84,7 +84,7 @@ jobs:
       - name: Build and Push [earthquakes] image to ECR
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: earthquakes
+          ECR_REPOSITORY: web-earthquakes
           IMAGE_TAG: ${{ github.sha }}
         run: |
           docker buildx build --platform linux/arm64 --tag $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG --push ./Application/web/$ECR_REPOSITORY
