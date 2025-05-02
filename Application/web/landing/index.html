@@ -1,120 +1,27 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Welcome to DaveOps</title>
-  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;700&display=swap" rel="stylesheet">
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Rubik', sans-serif;
-      background: #f9f9f9;
-    }
-    header {
-      background-color: #1e73be;
-      color: white;
-      padding: 1em 2em;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    nav a {
-      color: white;
-      text-decoration: none;
-      margin-left: 20px;
-      font-weight: bold;
-    }
-    .hero {
-      background: url('https://upload.wikimedia.org/wikipedia/commons/6/66/Lego_bricks_%28yellow_background%29.jpg');
-      background-size: cover;
-      padding: 3em 2em;
-      color: #fff;
-      text-align: center;
-    }
-    .hero h1 {
-      font-size: 3em;
-      margin-bottom: 0.2em;
-    }
-    .hero p {
-      font-size: 1.3em;
-    }
-    .cards {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 1.5em;
-      margin: 2em auto;
-      max-width: 1000px;
-    }
-    .card {
-      background: white;
-      border-radius: 10px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-      padding: 1.5em;
-      flex: 1 1 280px;
-      max-width: 320px;
-      transition: transform 0.3s ease;
-    }
-    .card:hover {
-      transform: scale(1.05);
-    }
-    .card h3 {
-      margin-top: 0;
-    }
-    .card img {
-      height: 40px;
-      margin-bottom: 10px;
-    }
-    footer {
-      text-align: center;
-      padding: 2em;
-      background: #1e73be;
-      color: white;
-      margin-top: 4em;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <title>DaveOps - Welcome</title>
+    <link rel="stylesheet" href="static/css/style.css">
 </head>
-<body>
-  <header>
-    <div class="logo">DaveOps</div>
+<body style="background: url('static/img/lego-bg.jpg'); background-size: cover;">
     <nav>
-      <a href="#about">About</a>
-      <a href="#projects">Projects</a>
-      <a href="#links">Links</a>
+        <h1>🧱 DaveOps</h1>
+        <ul>
+            <li><a href="#">About Me</a></li>
+            <li><a href="#">Links</a></li>
+            <li><a href="https://earthquakes.daveops.pro">Earthquake Project</a></li>
+        </ul>
     </nav>
-  </header>
-
-  <section class="hero">
-    <h1>Welcome to DaveOps</h1>
-    <p>DevOps Engineering. LEGO Energy. Cloud Fun.</p>
-  </section>
-
-  <section class="cards">
-    <div class="card" id="about">
-      <img src="https://img.icons8.com/color/48/000000/lego.png" alt="Lego">
-      <h3>About Me</h3>
-      <p>I'm Dave, a DevOps engineer who builds systems like LEGO sets: modular, colorful, and indestructible. I specialize in Kubernetes, CI/CD, and observability.</p>
-    </div>
-    <div class="card" id="projects">
-      <img src="https://raw.githubusercontent.com/kubernetes/community/master/icons/svg/resources-black.svg" alt="Kubernetes">
-      <h3>Earthquake Monitor</h3>
-      <p>A real-time seismic visualizer built on Kafka, K8s, and Flask.<br>
-      <a href="https://earthquakes.daveops.pro" style="color:#1e73be;font-weight:bold;">Visit earthquakes.daveops.pro</a></p>
-    </div>
-    <div class="card" id="links">
-      <img src="https://img.icons8.com/color/48/000000/link.png" alt="Links">
-      <h3>Useful Links</h3>
-      <ul style="list-style:none; padding-left:0;">
-        <li><a href="#" target="_blank">GitHub</a></li>
-        <li><a href="#" target="_blank">LinkedIn</a></li>
-        <li><a href="mailto:you@example.com">Email Me</a></li>
-      </ul>
-    </div>
-  </section>
-
-  <footer>
-    Made with ☁️ and 🧱 by DaveOps
-  </footer>
+    <main>
+        <img src="static/img/lego-figure.png" alt="LEGO" style="height: 200px;">
+        <section class="tech-logos">
+            <img src="static/img/docker.png" alt="Docker">
+            <img src="static/img/kubernetes.png" alt="Kubernetes">
+            <img src="static/img/terraform.png" alt="Terraform">
+        </section>
+    </main>
 </body>
 </html>
