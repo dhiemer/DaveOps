@@ -133,6 +133,8 @@ jobs:
             --set consumer.image.repository=032021926264.dkr.ecr.us-east-1.amazonaws.com/consumer --set consumer.image.tag=${{ github.sha }} \
             --set quake-detector-svc.image.repository=032021926264.dkr.ecr.us-east-1.amazonaws.com/quake-detector-svc --set quake-detector-svc.image.tag=${{ github.sha }} \
             --set alert-dispatcher-svc.image.repository=032021926264.dkr.ecr.us-east-1.amazonaws.com/alert-dispatcher-svc --set alert-dispatcher-svc.image.tag=${{ github.sha }} \
+            --set web-main.image.repository=032021926264.dkr.ecr.us-east-1.amazonaws.com/web-main --set web-main.image.tag=${{ github.sha }} \
+            --set web-earthquakes.image.repository=032021926264.dkr.ecr.us-east-1.amazonaws.com/web-earthquakes --set web-earthquakes.image.tag=${{ github.sha }} \
             --timeout 3m
           #kubectl rollout restart deployment landing
 
