@@ -42,8 +42,8 @@ jobs:
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: landing
-          IMAGE_TAG: latest
-          #IMAGE_TAG: ${{ github.sha }}
+          #IMAGE_TAG: latest
+          IMAGE_TAG: ${{ github.sha }}
         run: |
           docker buildx build --platform linux/arm64 --tag $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG --push ./Application/web/$ECR_REPOSITORY
 
@@ -87,7 +87,7 @@ jobs:
             --set producer.image.repository=032021926264.dkr.ecr.us-east-1.amazonaws.com/producer --set producer.image.tag=latest \
             --set consumer.image.repository=032021926264.dkr.ecr.us-east-1.amazonaws.com/consumer --set consumer.image.tag=latest \
             --set web.image.repository=032021926264.dkr.ecr.us-east-1.amazonaws.com/web --set web.image.tag=latest \
-            --set landing.image.repository=032021926264.dkr.ecr.us-east-1.amazonaws.com/landing --set landing.image.tag=latest \
+            --set landing.image.repository=032021926264.dkr.ecr.us-east-1.amazonaws.com/landing --set landing.image.tag=${{ github.sha }} \
             --set quake-detector-svc.image.repository=032021926264.dkr.ecr.us-east-1.amazonaws.com/quake-detector-svc --set quake-detector-svc.image.tag=latest \
             --set alert-dispatcher-svc.image.repository=032021926264.dkr.ecr.us-east-1.amazonaws.com/alert-dispatcher-svc --set alert-dispatcher-svc.image.tag=latest \
             --timeout 3m

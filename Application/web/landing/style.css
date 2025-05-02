@@ -31,27 +31,35 @@ header a:hover {
   color: #D62828;
 }
 
-.page-layout {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
+.main-container {
   padding: 40px 20px;
-}
-
-.side-section, .center-section {
-  background: rgba(255, 255, 255, 0.95);
-  border-radius: 10px;
-  box-shadow: 0 3px 10px rgba(0,0,0,0.2);
-  margin: 10px;
-  padding: 20px;
-  flex: 1 1 250px;
-  max-width: 300px;
-  animation: fadeIn 1s ease-in;
+  max-width: 1200px;
+  margin: auto;
 }
 
 .center-section {
-  flex: 2 1 600px;
-  max-width: 100%;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 10px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+  margin: 10px auto 40px auto;
+  padding: 20px;
+  animation: fadeIn 1s ease-in;
+}
+
+.three-columns {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.side-section {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 10px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+  padding: 20px;
+  flex: 1 1 30%;
+  animation: fadeIn 1s ease-in;
 }
 
 section h2 {
@@ -91,8 +99,7 @@ footer {
 }
 
 @media screen and (max-width: 768px) {
-  .page-layout {
+  .three-columns {
     flex-direction: column;
-    align-items: center;
   }
 }
