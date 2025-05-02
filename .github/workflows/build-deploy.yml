@@ -19,6 +19,18 @@ jobs:
 # 
 ########################################################
 
+  debug-commit-info:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Show changed files
+        run: |
+          echo "Modified:"
+          echo "${{ toJson(github.event.head_commit.modified) }}"
+          echo "Added:"
+          echo "${{ toJson(github.event.head_commit.added) }}"
+          echo "Removed:"
+          echo "${{ toJson(github.event.head_commit.removed) }}"
+
   #############
   # WEB
   #############
