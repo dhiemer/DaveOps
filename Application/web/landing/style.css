@@ -8,7 +8,7 @@ body {
 }
 
 header {
-  background: #0754AA;
+  background: #0753aaec;
   padding: 20px;
   text-align: center;
   color: #000;
@@ -83,7 +83,7 @@ a:hover {
 footer {
   text-align: center;
   padding: 20px;
-  background-color: #0754AA;
+  background-color: #0753aac5;
   color: #333;
   font-size: 0.9em;
   margin-top: 40px;
