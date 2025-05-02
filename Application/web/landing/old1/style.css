@@ -3,7 +3,6 @@ body {
   margin: 0;
   font-family: 'Nunito', sans-serif;
   background: url('legoback.png') repeat;
-  background-size: 50%;
   color: #111;
 }
 
@@ -103,28 +102,4 @@ footer {
   .three-columns {
     flex-direction: column;
   }
-}
-
-.lego-icons {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-  margin-top: 20px;
-  flex-wrap: wrap;
-}
-
-.lego-icons img {
-  width: 60px;
-  height: auto;
-  animation: bounce 2s infinite ease-in-out;
-}
-
-.bouncy:hover {
-  transform: scale(1.2);
-  transition: transform 0.3s ease;
-}
-
-@keyframes bounce {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-8px); }
 }
