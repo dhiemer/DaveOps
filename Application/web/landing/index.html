@@ -1,27 +1,65 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>DaveOps - Welcome</title>
-    <link rel="stylesheet" href="static/css/style.css">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DaveOps Landing</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background: #fff;
+        }
+        header {
+            background: #444;
+            color: white;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        nav a {
+            color: white;
+            margin: 0 1rem;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .hero {
+            text-align: center;
+            margin: 2rem auto;
+        }
+        .tiles {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+        .tiles img {
+            width: 150px;
+            transition: transform 0.2s;
+        }
+        .tiles img:hover {
+            transform: scale(1.1);
+        }
+    </style>
 </head>
-<body style="background: url('static/img/lego-bg.jpg'); background-size: cover;">
-    <nav>
-        <h1>🧱 DaveOps</h1>
-        <ul>
-            <li><a href="#">About Me</a></li>
-            <li><a href="#">Links</a></li>
-            <li><a href="https://earthquakes.daveops.pro">Earthquake Project</a></li>
-        </ul>
-    </nav>
-    <main>
-        <img src="static/img/lego-figure.png" alt="LEGO" style="height: 200px;">
-        <section class="tech-logos">
-            <img src="static/img/docker.png" alt="Docker">
-            <img src="static/img/kubernetes.png" alt="Kubernetes">
-            <img src="static/img/terraform.png" alt="Terraform">
-        </section>
-    </main>
+<body>
+    <header>
+        <div><strong>🧱 DaveOps</strong></div>
+        <nav>
+            <a href="#">About Me</a>
+            <a href="#">Links</a>
+            <a href="https://earthquakes.daveops.pro">Earthquake Project</a>
+        </nav>
+    </header>
+    <section class="hero">
+        <h1>Welcome to DaveOps!</h1>
+        <p>A LEGO-themed tech playground featuring Kubernetes, Docker, and Terraform.</p>
+    </section>
+    <section class="tiles">
+        <img src="static/img/docker-lego.png" alt="Docker LEGO" />
+        <img src="static/img/terraform-lego.png" alt="Terraform LEGO" />
+        <img src="static/img/kubernetes-lego.png" alt="Kubernetes LEGO" />
+    </section>
 </body>
 </html>
