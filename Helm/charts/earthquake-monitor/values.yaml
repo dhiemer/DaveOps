@@ -27,12 +27,12 @@ alertdispatchersvc:
   pullPolicy: Always
 
 webmain:
-  name: main
+  name: web-main
   tag: latest
   pullPolicy: Always
 
 webearthquakes:
-  name: earthquakes
+  name: web-earthquakes
   tag: latest
   pullPolicy: Always
 
