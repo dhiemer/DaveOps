@@ -1,32 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>DaveOps Landing</title>
-  <link rel="stylesheet" href="styles.css" />
+  <meta charset="UTF-8">
+  <title>Welcome to DaveOps</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
   <header>
-    <img src="assets/lego-avatar.png" alt="LEGO Avatar" class="avatar">
     <h1>Welcome to DaveOps</h1>
-    <p class="tagline">LEGO meets DevOps – A fun blend of tech and creativity!</p>
+    <nav>
+      <a href="#">Home</a>
+      <a href="#">Projects</a>
+      <a href="#">About</a>
+      <a href="#">Contact</a>
+    </nav>
   </header>
 
-  <section class="tech-icons">
-    <img src="assets/lego-k8s.png" alt="Kubernetes LEGO" />
-    <img src="assets/lego-docker.png" alt="Docker LEGO" />
-    <img src="assets/lego-terraform.png" alt="Terraform LEGO" />
-  </section>
+  <main class="page-layout">
+    <section class="side-section">
+      <h2>👋 About Me</h2>
+      <p>
+        Hi, I'm Dave — a DevOps engineer who treats infrastructure like LEGO. Automation, pipelines, and monitoring are my bricks.
+      </p>
+    </section>
 
-  <section class="links">
-    <a href="/about.html" class="btn">About Me</a>
-    <a href="/links.html" class="btn">Links</a>
-    <a href="https://earthquakes.daveops.pro" class="btn">Earthquake Project</a>
-  </section>
+    <section class="center-section">
+      <h2>🎵 Why DevOps is Awesome</h2>
+      <p>
+        Everything is awesome, when you deploy as a team! DevOps glues your code, infra, and ideas together into a symphony of CI/CD harmony.
+        Like LEGO bricks clicking together, pipelines automate the boring, alerting saves the day, and observability keeps the chaos at bay.
+        From “git push” to prod, it’s all continuous, collaborative, and crazy cool!
+      </p>
+    </section>
+
+    <section class="side-section">
+      <h2>🔗 Links</h2>
+      <ul>
+        <li><a href="https://github.com/dhiemer" target="_blank">GitHub</a></li>
+        <li><a href="https://linkedin.com/in/david-hiemer" target="_blank">LinkedIn</a></li>
+        <li><a href="mailto:hiemer.david@gmail.com">Email Me</a></li>
+      </ul>
+    </section>
+  </main>
 
   <footer>
-    <p>© 2025 DaveOps. Built with blocks & bugs.</p>
+    &copy; 2025 DaveOps. Everything is awesome.
   </footer>
+
 </body>
 </html>
