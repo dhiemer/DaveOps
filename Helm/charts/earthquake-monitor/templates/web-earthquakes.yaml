@@ -22,6 +22,8 @@ spec:
         - name: web-earthquakes
           image: "{{ .Values.ecr_repository }}/{{ .Values.webearthquakes.name }}:{{ .Values.webearthquakes.tag }}"
           imagePullPolicy: {{ .Values.webearthquakes.pullPolicy }}
+          ports:
+            - containerPort: 80 #add
           env:
             - name: DB_HOST
               value: postgres
@@ -49,7 +51,7 @@ spec:
     - protocol: TCP
       port: 80
       targetPort: 80
-
+      nodePort: 30080 #add
 
 #apiVersion: v1
 #kind: Service
