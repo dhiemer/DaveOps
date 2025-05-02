@@ -58,7 +58,7 @@ jobs:
           ECR_REPOSITORY: web-main
           IMAGE_TAG: ${{ github.sha }}
         run: |
-          docker buildx build --platform linux/arm64 --tag $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG --push ./Application/web/$ECR_REPOSITORY
+          docker buildx build --platform linux/arm64 --tag $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG --push ./Application/web/main
 
   build-web-earthquakes:
     #if: ${{ github.event_name == 'push' && contains(join(github.event.commits.*.modified, '\n'), 'Application/web/earthquakes/') }}
@@ -87,7 +87,7 @@ jobs:
           ECR_REPOSITORY: web-earthquakes
           IMAGE_TAG: ${{ github.sha }}
         run: |
-          docker buildx build --platform linux/arm64 --tag $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG --push ./Application/web/$ECR_REPOSITORY
+          docker buildx build --platform linux/arm64 --tag $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG --push ./Application/web/earthquakes
 
 
 
