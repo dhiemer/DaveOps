@@ -16,11 +16,6 @@ consumer:
   tag: latest
   pullPolicy: Always
 
-web:
-  name: web
-  tag: latest
-  pullPolicy: Always
-
 quakedetectorsvc:
   name: quake-detector-svc
   tag: latest
@@ -30,4 +25,13 @@ alertdispatchersvc:
   name: alert-dispatcher-svc
   tag: latest
   pullPolicy: Always
+
+webmain:
+  name: web-main
+  pullPolicy: Always
+
+webearthquakes:
+  name: web-earthquakes
+  pullPolicy: Always
+
 

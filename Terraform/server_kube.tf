@@ -30,7 +30,7 @@ resource "aws_security_group" "kube_sg" {
   ingress {
     description = "30080"
     from_port   = 30080
-    to_port     = 30080
+    to_port     = 30081
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
@@ -79,8 +79,17 @@ resource "aws_instance" "k3s_server" {
 
 }
 
-resource "aws_alb_target_group_attachment" "tg_kube_tgattachment" {
-  target_group_arn = aws_lb_target_group.web.arn
-  target_id        = aws_instance.k3s_server.id
+# resource "aws_alb_target_group_attachment" "tg_kube_tgattachment" {
+#   target_group_arn = aws_lb_target_group.web.arn
+#   target_id        = aws_instance.k3s_server.id
+# 
+# }
+# 
+# 
+# resource "aws_lb_target_group_attachment" "landing" {
+#   target_group_arn = aws_lb_target_group.landing.arn
+#   target_id        = aws_instance.k3s_server.id
+#   port             = 30081
+# }
+# 
 
-}
