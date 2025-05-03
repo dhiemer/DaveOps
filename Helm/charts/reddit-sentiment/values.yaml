@@ -1,0 +1,13 @@
+image:
+  repository: your-ecr-repo/reddit-sentiment
+  tag: latest
+  pullPolicy: IfNotPresent
+
+postgres:
+  user: reddit
+  password: sentimentpass
+  db: sentimentdb
+
+frontend:
+  image: your-ecr-repo/reddit-sentiment-frontend
+  tag: latest
