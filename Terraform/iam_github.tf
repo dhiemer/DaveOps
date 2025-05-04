@@ -12,7 +12,7 @@ data "aws_iam_policy_document" "github_oidc_assume_role" {
     condition {
       test     = "StringEquals"
       variable = "token.actions.githubusercontent.com:sub"
-      values   = ["repo:dhiemer/earthquake-monitor:ref:refs/heads/main"]
+      values   = ["repo:dhiemer/earthquake-monitor:ref:refs/heads/main","repo:dhiemer/earthquake-monitor:ref:refs/heads/aws"]
     }
   }
 }

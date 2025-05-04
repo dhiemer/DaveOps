@@ -6,47 +6,18 @@ on:
       - aws
 
 jobs:
-########################################################
-#   
-#   ██████╗ ██╗   ██╗██╗██╗     ██████╗ 
-#   ██╔══██╗██║   ██║██║██║     ██╔══██╗
-#   ██████╔╝██║   ██║██║██║     ██║  ██║
-#   ██╔══██╗██║   ██║██║██║     ██║  ██║
-#   ██████╔╝╚██████╔╝██║███████╗██████╔╝
-#   ╚═════╝  ╚═════╝ ╚═╝╚══════╝╚═════╝ 
-# 
-########################################################
-
-  #debug-commit-info:
-  #  runs-on: ubuntu-latest
-  #  steps:
-  #    - name: Show changed files
-  #      run: |
-  #        echo "Modified:"
-  #        echo "${{ toJson(github.event.head_commit.modified) }}"
-  #        echo "Added:"
-  #        echo "${{ toJson(github.event.head_commit.added) }}"
-  #        echo "Removed:"
-  #        echo "${{ toJson(github.event.head_commit.removed) }}"
-
-  #############
-  # WEB
-  #############
-
   build-consumer:
     runs-on: ubuntu-latest
-
     permissions:
       id-token: write
       contents: read
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v2
         with:
-          role-to-assume: arn:aws:iam::032021926264:role/github-oidc-provider-aws
+          role-to-assume: arn:aws:iam::032021926264:role/github-actions-ecr-push-role
           aws-region: us-east-1
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -61,21 +32,18 @@ jobs:
         run: |
           docker buildx build --platform linux/arm64 --tag $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG --push ./Application/$ECR_REPOSITORY
 
-
   build-producer:
     runs-on: ubuntu-latest
-
     permissions:
       id-token: write
       contents: read
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v2
         with:
-          role-to-assume: arn:aws:iam::032021926264:role/github-oidc-provider-aws
+          role-to-assume: arn:aws:iam::032021926264:role/github-actions-ecr-push-role
           aws-region: us-east-1
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -90,22 +58,18 @@ jobs:
         run: |
           docker buildx build --platform linux/arm64 --tag $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG --push ./Application/$ECR_REPOSITORY
 
-
-
   build-alert-dispatcher-svc:
     runs-on: ubuntu-latest
-
     permissions:
       id-token: write
       contents: read
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v2
         with:
-          role-to-assume: arn:aws:iam::032021926264:role/github-oidc-provider-aws
+          role-to-assume: arn:aws:iam::032021926264:role/github-actions-ecr-push-role
           aws-region: us-east-1
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -120,21 +84,18 @@ jobs:
         run: |
           docker buildx build --platform linux/arm64 --tag $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG --push ./Application/$ECR_REPOSITORY
 
-
   build-quake-detector-svc:
     runs-on: ubuntu-latest
-
     permissions:
       id-token: write
       contents: read
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v2
         with:
-          role-to-assume: arn:aws:iam::032021926264:role/github-oidc-provider-aws
+          role-to-assume: arn:aws:iam::032021926264:role/github-actions-ecr-push-role
           aws-region: us-east-1
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -149,22 +110,18 @@ jobs:
         run: |
           docker buildx build --platform linux/arm64 --tag $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG --push ./Application/$ECR_REPOSITORY
 
-
-
   build-web-main:
     runs-on: ubuntu-latest
-
     permissions:
       id-token: write
       contents: read
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v2
         with:
-          role-to-assume: arn:aws:iam::032021926264:role/github-oidc-provider-aws
+          role-to-assume: arn:aws:iam::032021926264:role/github-actions-ecr-push-role
           aws-region: us-east-1
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -180,20 +137,17 @@ jobs:
           docker buildx build --platform linux/arm64 --tag $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG --push ./Application/web/main
 
   build-web-earthquakes:
-    #if: ${{ github.event_name == 'push' && contains(join(github.event.commits.*.modified, '\n'), 'Application/web/earthquakes/') }}
     runs-on: ubuntu-latest
-
     permissions:
       id-token: write
       contents: read
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v2
         with:
-          role-to-assume: arn:aws:iam::032021926264:role/github-oidc-provider-aws
+          role-to-assume: arn:aws:iam::032021926264:role/github-actions-ecr-push-role
           aws-region: us-east-1
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -208,18 +162,6 @@ jobs:
         run: |
           docker buildx build --platform linux/arm64 --tag $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG --push ./Application/web/earthquakes
 
-
-
-########################################################
-#   
-#   ██████╗ ███████╗██████╗ ██╗      ██████╗ ██╗   ██╗
-#   ██╔══██╗██╔════╝██╔══██╗██║     ██╔═══██╗╚██╗ ██╔╝
-#   ██║  ██║█████╗  ██████╔╝██║     ██║   ██║ ╚████╔╝ 
-#   ██║  ██║██╔══╝  ██╔═══╝ ██║     ██║   ██║  ╚██╔╝  
-#   ██████╔╝███████╗██║     ███████╗╚██████╔╝   ██║   
-#   ╚═════╝ ╚══════╝╚═╝     ╚══════╝ ╚═════╝    ╚═╝   
-#                    
-########################################################
   deploy:
     needs:
       - build-web-main
@@ -228,27 +170,21 @@ jobs:
       - build-producer
       - build-quake-detector-svc
       - build-alert-dispatcher-svc
-    #if: ${{ always() && (needs.build-web-main.result == 'success' || needs.build-web-earthquakes.result == 'success' ) }}
     runs-on: [self-hosted, Linux, ARM64, k3s]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-
       - name: Set up Helm
         uses: azure/setup-helm@v3
         with:
           version: latest
-
       - name: Set up kubectl
         uses: azure/setup-kubectl@v3
         with:
           version: latest
-
       - name: Deploy Helm Chart
-      
         run: |
           export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
-          #helm template ./Helm/charts/earthquake-monitor --debug
           helm upgrade --install earthquake-monitor ./Helm/charts/earthquake-monitor \
             --namespace default \
             --set producer.image.repository=032021926264.dkr.ecr.us-east-1.amazonaws.com/producer --set producer.image.tag=latest \
@@ -258,5 +194,3 @@ jobs:
             --set web-main.image.repository=032021926264.dkr.ecr.us-east-1.amazonaws.com/web-main --set webmain.tag=latest \
             --set web-earthquakes.image.repository=032021926264.dkr.ecr.us-east-1.amazonaws.com/web-earthquakes --set webearthquakes.tag=latest \
             --timeout 3m
-
-
