@@ -6,6 +6,9 @@ webImage: localhost:5000/earthquake-web:latest
 
 ecr_repository: 032021926264.dkr.ecr.us-east-1.amazonaws.com
 
+imagePullSecrets:
+  - name: ecr-pull
+
 producer:
   name: producer
   tag: latest

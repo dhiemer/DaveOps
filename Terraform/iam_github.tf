@@ -1,10 +1,9 @@
 ###############################################################################
-# GitHub OIDC provider  (must be a *resource* because it does not exist yet)
+# GitHub OIDC provider
 ###############################################################################
 resource "aws_iam_openid_connect_provider" "github" {
   url = "https://token.actions.githubusercontent.com"
 
-  # If you want to future‑proof, keep both IDs.
   client_id_list = [
     "sts.amazonaws.com",
     "https://github.com/dhiemer"
@@ -19,10 +18,8 @@ resource "aws_iam_openid_connect_provider" "github" {
 }
 
 ###############################################################################
-# One role that the workflows assume
+#  role that the workflow assumes
 ###############################################################################
-# … OIDC provider block stays exactly the same …
-
 data "aws_iam_policy_document" "github_oidc_assume_role" {
   statement {
     effect    = "Allow"
@@ -33,7 +30,7 @@ data "aws_iam_policy_document" "github_oidc_assume_role" {
       identifiers = [aws_iam_openid_connect_provider.github.arn]
     }
 
-    # Updated to the new repo name
+    # All dhiemer projects
     condition {
       test     = "StringLike"
       variable = "token.actions.githubusercontent.com:sub"
@@ -42,7 +39,6 @@ data "aws_iam_policy_document" "github_oidc_assume_role" {
       ]
     }
 
-    # Accept either audience value
     condition {
       test     = "StringEquals"
       variable = "token.actions.githubusercontent.com:aud"
@@ -57,19 +53,19 @@ data "aws_iam_policy_document" "github_oidc_assume_role" {
 
 
 
-resource "aws_iam_role" "github_actions_ecr" {
-  name               = "github-actions-ecr"
+resource "aws_iam_role" "github_actions" {
+  name               = "github_actions"
   assume_role_policy = data.aws_iam_policy_document.github_oidc_assume_role.json
   tags = {
-    Name = "github-actions-ecr"
+    Name = "github_actions"
     env  = "DaveOps"
     iac  = "true"
   }
 }
 
-resource "aws_iam_role_policy" "github_actions_ecr_inline" {
-  name = "github-actions-ecr-inline"
-  role = aws_iam_role.github_actions_ecr.id
+resource "aws_iam_role_policy" "github_actions_inline" {
+  name = "github_actions-inline"
+  role = aws_iam_role.github_actions.id
 
   policy = jsonencode({
     Version = "2012-10-17"
