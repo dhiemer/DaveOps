@@ -26,6 +26,10 @@ resource "aws_iam_instance_profile" "kube_profile" {
   role = aws_iam_role.kube.name
 }
 
+resource "aws_iam_role_policy_attachment" "node_ecr_ro" {
+  role       = "DaveOps-kube-role"
+  policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
+}
 
 ##################################
 # Kube Inline Policy

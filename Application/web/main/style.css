@@ -1,5 +1,8 @@
-
 body {
+  font-size: 16px;
+  line-height: 1.6;
+  word-wrap: break-word;
+  padding: 0 10px;
   margin: 0;
   font-family: 'Nunito', sans-serif;
   background: url('legoback.png') repeat;
@@ -44,6 +47,7 @@ header a:hover {
   box-shadow: 0 3px 10px rgba(0,0,0,0.2);
   margin: 10px auto 40px auto;
   padding: 20px;
+  font-size: 0.95em;
   animation: fadeIn 1s ease-in;
 }
 
@@ -63,12 +67,29 @@ header a:hover {
   animation: fadeIn 1s ease-in;
 }
 
+.video-container {
+  position: relative;
+  padding-bottom: 56.25%;
+  height: 0;
+  overflow: hidden;
+  max-width: 100%;
+}
+
+.video-container iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
 section h2 {
   color: #0055A5;
 }
 
 ul {
   padding-left: 20px;
+  margin: 0 0 20px 0;
 }
 
 a {
@@ -89,6 +110,14 @@ footer {
   margin-top: 40px;
 }
 
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  overflow-x: hidden;
+}
+
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }
@@ -102,5 +131,38 @@ footer {
 @media screen and (max-width: 768px) {
   .three-columns {
     flex-direction: column;
+  }
+
+  .main-container {
+    padding: 20px 10px;
+  }
+
+  .resume-header {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .resume-contact {
+    text-align: center;
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  h2, h3, h4 {
+    font-size: 1.1em;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  body {
+    font-size: 14px;
+  }
+
+  h2, h3, h4 {
+    font-size: 1em;
   }
 }
