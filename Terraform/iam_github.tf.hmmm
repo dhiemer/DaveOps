@@ -21,25 +21,53 @@ resource "aws_iam_openid_connect_provider" "github" {
 ###############################################################################
 # One role that the workflows assume
 ###############################################################################
-# … OIDC provider block stays exactly the same …
+# data "aws_iam_policy_document" "github_oidc_assume_role" {
+#   statement {
+#     effect  = "Allow"
+#     actions = ["sts:AssumeRoleWithWebIdentity"]
+# 
+#     principals {
+#       type        = "Federated"
+#       identifiers = [aws_iam_openid_connect_provider.github.arn]
+#     }
+# 
+#     condition {
+#       test     = "StringLike"
+#       variable = "token.actions.githubusercontent.com:sub"
+#       values   = [
+#         "repo:dhiemer/earthquake-monitor:ref:refs/heads/main",
+#         "repo:dhiemer/earthquake-monitor:ref:refs/heads/aws"
+#       ]
+#     }
+# 
+#     condition {
+#       test     = "StringEquals"
+#       variable = "token.actions.githubusercontent.com:aud"
+#       values   = [
+#         "sts.amazonaws.com",
+#         "https://github.com/dhiemer"
+#       ]
+#     }
+#   }
+# }
+# 
+
 
 data "aws_iam_policy_document" "github_oidc_assume_role" {
   statement {
-    effect    = "Allow"
-    actions   = ["sts:AssumeRoleWithWebIdentity"]
+    effect  = "Allow"
+    actions = ["sts:AssumeRoleWithWebIdentity"]
 
     principals {
       type        = "Federated"
       identifiers = [aws_iam_openid_connect_provider.github.arn]
     }
 
-    # Updated to the new repo name
+    # Accept any branch, tag, or environment in this repo
     condition {
       test     = "StringLike"
       variable = "token.actions.githubusercontent.com:sub"
-      values   = [
-        "repo:dhiemer/*"
-      ]
+      values   = ["repo:dhiemer/daveops:*"]
     }
 
     # Accept either audience value
@@ -53,6 +81,7 @@ data "aws_iam_policy_document" "github_oidc_assume_role" {
     }
   }
 }
+
 
 
 
