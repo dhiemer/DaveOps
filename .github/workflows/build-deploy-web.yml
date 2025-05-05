@@ -55,11 +55,11 @@ jobs:
   deploy:
     needs:
       - build-web-main
-      - build-web-earthquakes
-      - build-consumer
-      - build-producer
-      - build-quake-detector-svc
-      - build-alert-dispatcher-svc
+      #- build-web-earthquakes
+      #- build-consumer
+      #- build-producer
+      #- build-quake-detector-svc
+      #- build-alert-dispatcher-svc
     runs-on: [self-hosted, Linux, ARM64, k3s]
     steps:
       - uses: actions/checkout@v3
