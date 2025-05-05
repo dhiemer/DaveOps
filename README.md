@@ -1,10 +1,5 @@
-# Earthquake Monitor
+# DaveOps
 
-A local demo app that fetches real-time USGS earthquake data and displays it via Kafka + K8s + Helm + NGINX.
+This website is a self‑hosted passion project that I design, build, and maintain end‑to‑end. The stack is 100 % infrastructure‑as‑code: Terraform provisions the AWS backbone, a GitHub Actions pipeline builds Docker images and ships them to ECR, and Helm deploys the Kubernetes workloads (NGINX web tier, Kafka stream, Postgres, micro‑services). Everything you see—from the LEGO‑themed UI to the real‑time earthquake dashboard—runs on clusters I manage myself, proving out production DevOps patterns in a fun, personal sandbox.
 
-## Features
-- Python producer for USGS data
-- Kafka event stream
-- Consumer writes to local JSON
-- NGINX serves it with a simple HTML dashboard
-- Fully local with Docker Desktop + Helm
+
