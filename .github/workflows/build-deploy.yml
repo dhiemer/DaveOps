@@ -22,6 +22,17 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - name: Dump GitHub OIDC claims
+        id: show-claims
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const jwt = require('jsonwebtoken');
+            const token = await core.getIDToken('sts.amazonaws.com');   // same audience you pass below
+            const claims = jwt.decode(token, { complete: false });
+            console.log('--- OIDC token claims ---');
+            console.log(JSON.stringify(claims, null, 2));
+
       - uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: ${{ env.ROLE_TO_ASSUME }}

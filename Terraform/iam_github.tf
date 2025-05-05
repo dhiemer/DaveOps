@@ -21,6 +21,38 @@ resource "aws_iam_openid_connect_provider" "github" {
 ###############################################################################
 # One role that the workflows assume
 ###############################################################################
+# data "aws_iam_policy_document" "github_oidc_assume_role" {
+#   statement {
+#     effect  = "Allow"
+#     actions = ["sts:AssumeRoleWithWebIdentity"]
+# 
+#     principals {
+#       type        = "Federated"
+#       identifiers = [aws_iam_openid_connect_provider.github.arn]
+#     }
+# 
+#     condition {
+#       test     = "StringLike"
+#       variable = "token.actions.githubusercontent.com:sub"
+#       values   = [
+#         "repo:dhiemer/earthquake-monitor:ref:refs/heads/main",
+#         "repo:dhiemer/earthquake-monitor:ref:refs/heads/aws"
+#       ]
+#     }
+# 
+#     condition {
+#       test     = "StringEquals"
+#       variable = "token.actions.githubusercontent.com:aud"
+#       values   = [
+#         "sts.amazonaws.com",
+#         "https://github.com/dhiemer"
+#       ]
+#     }
+#   }
+# }
+# 
+
+
 data "aws_iam_policy_document" "github_oidc_assume_role" {
   statement {
     effect  = "Allow"
@@ -31,15 +63,14 @@ data "aws_iam_policy_document" "github_oidc_assume_role" {
       identifiers = [aws_iam_openid_connect_provider.github.arn]
     }
 
+    # Accept any branch, tag, or environment in this repo
     condition {
       test     = "StringLike"
       variable = "token.actions.githubusercontent.com:sub"
-      values   = [
-        "repo:dhiemer/earthquake-monitor:ref:refs/heads/main",
-        "repo:dhiemer/earthquake-monitor:ref:refs/heads/aws"
-      ]
+      values   = ["repo:dhiemer/earthquake-monitor:*"]
     }
 
+    # Accept either audience value
     condition {
       test     = "StringEquals"
       variable = "token.actions.githubusercontent.com:aud"
@@ -50,6 +81,10 @@ data "aws_iam_policy_document" "github_oidc_assume_role" {
     }
   }
 }
+
+
+
+
 
 resource "aws_iam_role" "github_actions_ecr" {
   name               = "github-actions-ecr"
