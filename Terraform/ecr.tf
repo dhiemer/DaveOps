@@ -25,7 +25,18 @@ locals {
       name                 = "alert-dispatcher-svc"
       expire_untagged_days = 5
       max_image_count      = 7
+    },
+    sedaro-web = {
+      name                 = "sedaro-web"
+      expire_untagged_days = 5
+      max_image_count      = 7
+    },
+    sedaro-app = {
+      name                 = "sedaro-app"
+      expire_untagged_days = 5
+      max_image_count      = 7
     }
+
   }
 
 

@@ -1,7 +1,6 @@
 kafkaImage: bitnami/kafka:latest
 producerImage: earthquake-producer:latest
 consumerImage: localhost:5000/earthquake-consumer:latest
-webImage: localhost:5000/earthquake-web:latest
 
 
 ecr_repository: 032021926264.dkr.ecr.us-east-1.amazonaws.com
@@ -27,10 +26,6 @@ quakedetectorsvc:
 alertdispatchersvc:
   name: alert-dispatcher-svc
   tag: latest
-  pullPolicy: Always
-
-webmain:
-  name: web-main
   pullPolicy: Always
 
 webearthquakes:

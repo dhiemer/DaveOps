@@ -3,7 +3,7 @@ name: Build and Deploy
 on:
   push:
     branches:
-      - aws
+      - awsv2
 
 # Shared environment values
 env:
@@ -70,12 +70,7 @@ jobs:
       - name: Deploy Helm chart
         run: |
           export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
-          helm upgrade --install earthquake-monitor ./Helm/charts/earthquake-monitor \
+          helm upgrade --install daveops ./Helm/charts/daveops \
             --namespace default \
-            --set producer.image.repository=032021926264.dkr.ecr.us-east-1.amazonaws.com/producer --set producer.image.tag=latest \
-            --set consumer.image.repository=032021926264.dkr.ecr.us-east-1.amazonaws.com/consumer --set consumer.image.tag=latest \
-            --set quake-detector-svc.image.repository=032021926264.dkr.ecr.us-east-1.amazonaws.com/quake-detector-svc --set quakedetectorsvc.tag=latest \
-            --set alert-dispatcher-svc.image.repository=032021926264.dkr.ecr.us-east-1.amazonaws.com/alert-dispatcher-svc --set alertdispatchersvc.tag=latest \
             --set web-main.image.repository=032021926264.dkr.ecr.us-east-1.amazonaws.com/web-main --set webmain.tag=latest \
-            --set web-earthquakes.image.repository=032021926264.dkr.ecr.us-east-1.amazonaws.com/web-earthquakes --set webearthquakes.tag=latest \
             --timeout 3m
