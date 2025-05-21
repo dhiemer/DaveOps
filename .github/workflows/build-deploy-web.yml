@@ -22,24 +22,24 @@ jobs:
 # 
 ########################################################
 
-  build-web-main:
-    runs-on: ubuntu-latest
-    permissions: { id-token: write, contents: read }
-    steps:
-      - uses: actions/checkout@v3
-      - uses: aws-actions/configure-aws-credentials@v4
-        with:
-          role-to-assume: ${{ env.ROLE_TO_ASSUME }}
-          aws-region: ${{ env.AWS_REGION }}
-          audience: sts.amazonaws.com
-      - uses: docker/setup-buildx-action@v3
-      - uses: aws-actions/amazon-ecr-login@v2
-        id: login-ecr
-      - name: Build & push web‑main image
-        run: |
-          docker buildx build --platform linux/arm64 \
-            --tag ${{ steps.login-ecr.outputs.registry }}/web-main:latest \
-            --push ./Application/web/main
+#  build-web-main:
+#    runs-on: ubuntu-latest
+#    permissions: { id-token: write, contents: read }
+#    steps:
+#      - uses: actions/checkout@v3
+#      - uses: aws-actions/configure-aws-credentials@v4
+#        with:
+#          role-to-assume: ${{ env.ROLE_TO_ASSUME }}
+#          aws-region: ${{ env.AWS_REGION }}
+#          audience: sts.amazonaws.com
+#      - uses: docker/setup-buildx-action@v3
+#      - uses: aws-actions/amazon-ecr-login@v2
+#        id: login-ecr
+#      - name: Build & push web‑main image
+#        run: |
+#          docker buildx build --platform linux/arm64 \
+#            --tag ${{ steps.login-ecr.outputs.registry }}/web-main:latest \
+#            --push ./Application/web/main
 
 
 ########################################################
@@ -60,7 +60,7 @@ jobs:
       #- build-producer
       #- build-quake-detector-svc
       #- build-alert-dispatcher-svc
-    runs-on: [self-hosted, Linux, ARM64, k3s]
+    runs-on: [self-hosted, daveops]
     steps:
       - uses: actions/checkout@v3
 
@@ -74,3 +74,5 @@ jobs:
             --namespace default \
             --set web-main.image.repository=032021926264.dkr.ecr.us-east-1.amazonaws.com/web-main --set webmain.tag=latest \
             --timeout 3m
+
+
