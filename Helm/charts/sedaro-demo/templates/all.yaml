@@ -27,6 +27,8 @@ spec:
       labels:
         app: app
     spec:
+      imagePullSecrets:
+        {{- toYaml .Values.imagePullSecrets | nindent 8 }}
       containers:
         - name: app
           image: "{{ .Values.ecr_repository }}/sedaro-app:{{ .Values.app.tag }}"
@@ -84,6 +86,8 @@ spec:
       labels:
         app: web
     spec:
+      imagePullSecrets:
+        {{- toYaml .Values.imagePullSecrets | nindent 8 }}
       containers:
         - name: web
           image: "{{ .Values.ecr_repository }}/sedaro-web:{{ .Values.web.tag }}"

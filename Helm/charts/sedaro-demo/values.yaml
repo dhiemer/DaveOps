@@ -79,3 +79,7 @@ grafana:
     nodePort: 30000
   ingress:
     enabled: false  # You can enable and configure ALB later if needed
+
+
+imagePullSecrets:
+  - name: ecr-creds
