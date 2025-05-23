@@ -45,7 +45,7 @@ jobs:
       #      --push ./Application/web/main
       - name: Build & push web‑main image
         run: |
-          docker buildx build --platform linux/amd64,linux/arm64 \
+          docker buildx build --platform linux/amd64 \
             --tag ${{ steps.login-ecr.outputs.registry }}/web-main:latest \
             --push ./Application/web/main
 
