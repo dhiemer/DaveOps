@@ -1,9 +1,10 @@
 locals {
   sites = {
     main = {
-      url      = "daveops.pro"
-      priority = 100
-      Port     = 30081
+      url               = "daveops.pro"
+      priority          = 100
+      Port              = 30081
+      health_check_path = "/"
       conditions = [
         {
           type   = "host_header"
@@ -12,9 +13,10 @@ locals {
       ]
     }
     earthquakes = {
-      url      = "earthquakes.daveops.pro"
-      priority = 200
-      Port     = 30080
+      url               = "earthquakes.daveops.pro"
+      priority          = 200
+      Port              = 30080
+      health_check_path = "/"
       conditions = [
         {
           type   = "host_header"
@@ -22,11 +24,11 @@ locals {
         }
       ]
     }
-    sedaro-nano = {
-      url      = "sedaro-nano.daveops.pro"
-      priority = 300
-      Port     = 30181
-      health_check_path = "/api/simulation"
+    sedaro-web = {
+      url               = "sedaro-nano.daveops.pro"
+      priority          = 300
+      Port              = 30180
+      health_check_path = "/"
       conditions = [
         {
           type   = "host_header"
@@ -34,10 +36,30 @@ locals {
         }
       ]
     }
+    sedaro-api = {
+      url               = "sedaro-nano.daveops.pro"
+      priority          = 301
+      Port              = 30181
+      health_check_path = "/api/simulation"
+      conditions = [
+        {
+          type   = "path_pattern"
+          values = ["/api/*"]
+        },
+        {
+          type   = "host_header"
+          values = ["sedaro-nano.daveops.pro"]
+        }
+      ]
+    }
+
+
+
     sedaro-grafana = {
-      url      = "sedaro-nano.daveops.pro"
-      priority = 302
-      Port     = 30182
+      url               = "sedaro-nano.daveops.pro"
+      priority          = 302
+      Port              = 30182
+      health_check_path = "/"
       conditions = [
         {
           type   = "path_pattern"
@@ -52,6 +74,7 @@ locals {
   }
 }
 
+# ALB Security Group
 resource "aws_security_group" "alb" {
   name        = "alb-sg"
   description = "Allow inbound traffic to ALB"
@@ -83,6 +106,7 @@ resource "aws_security_group" "alb" {
   }
 }
 
+# Application Load Balancer
 resource "aws_lb" "alb" {
   name               = "main-alb"
   internal           = false
@@ -95,6 +119,7 @@ resource "aws_lb" "alb" {
   }
 }
 
+# HTTP Listener (Redirect to HTTPS)
 resource "aws_lb_listener" "http" {
   load_balancer_arn = aws_lb.alb.arn
   port              = 80
@@ -110,6 +135,7 @@ resource "aws_lb_listener" "http" {
   }
 }
 
+# HTTPS Listener
 resource "aws_lb_listener" "https" {
   load_balancer_arn = aws_lb.alb.arn
   port              = 443
@@ -127,6 +153,7 @@ resource "aws_lb_listener" "https" {
   }
 }
 
+# Target Groups for each site
 resource "aws_lb_target_group" "this" {
   for_each = local.sites
 
@@ -134,6 +161,7 @@ resource "aws_lb_target_group" "this" {
   port     = each.value.Port
   protocol = "HTTP"
   vpc_id   = aws_vpc.main.id
+
 
   health_check {
     path                = lookup(each.value, "health_check_path", "/")
@@ -150,6 +178,7 @@ resource "aws_lb_target_group" "this" {
   }
 }
 
+# Listener Rules for each route
 resource "aws_lb_listener_rule" "this" {
   for_each = local.sites
 
@@ -180,6 +209,7 @@ resource "aws_lb_listener_rule" "this" {
   }
 }
 
+# Target Group Attachments
 resource "aws_alb_target_group_attachment" "tg_kube_tgattachment" {
   for_each         = local.sites
   target_group_arn = aws_lb_target_group.this[each.key].arn

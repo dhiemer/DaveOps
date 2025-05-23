@@ -48,14 +48,14 @@ def health():
     return "<p>Sedaro Nano API - running!</p>"
 
 
-@app.get("/api/simulation")
+@app.get("/simulation")
 def get_data():
     # Get most recent simulation from database
     simulation: Simulation = Simulation.query.order_by(Simulation.id.desc()).first()
     return simulation.data if simulation else []
 
 
-@app.post("/api/simulation")
+@app.post("/simulation")
 def simulate():
     # Get data from request in this form
     # init = {
