@@ -36,3 +36,5 @@ webearthquakes:
 imagePullSecrets:
   - name: ecr-creds
 
+smtp:
+  password: rxxaoectekfzboct
