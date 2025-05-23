@@ -38,3 +38,7 @@ imagePullSecrets:
 
 smtp:
   password: rxxaoectekfzboct
+
+
+DB_PASSWORD:
+  password: postgres
