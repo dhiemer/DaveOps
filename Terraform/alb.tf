@@ -56,11 +56,11 @@ locals {
     sedaro-grafana = {
       url      = "sedaro-nano.daveops.pro"
       priority = 302
-      Port     = 30182
+      Port     = 30000
       conditions = [
         {
           type   = "path_pattern"
-          values = ["/grafana/*"]
+          values = ["/grafana", "/grafana/*"]
         },
         {
           type   = "host_header"

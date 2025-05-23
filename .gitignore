@@ -413,5 +413,9 @@ Terraform/*.tfstate*
 *.tfstate*
 
 *.Notes
+*.note
 *.notes
 Notes
+
+*.drawio.bkp
+*.drawio.dtmp

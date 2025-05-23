@@ -28,6 +28,14 @@ resource "aws_security_group" "kube_sg" {
   }
 
   ingress {
+    description = "30000"
+    from_port   = 30000
+    to_port     = 30000
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
     description = "30080"
     from_port   = 30080
     to_port     = 30081
@@ -36,7 +44,7 @@ resource "aws_security_group" "kube_sg" {
   }
 
   ingress {
-    description = "30080"
+    description = "30180"
     from_port   = 30180
     to_port     = 30182
     protocol    = "tcp"
