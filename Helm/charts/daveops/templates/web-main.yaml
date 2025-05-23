@@ -14,6 +14,8 @@ spec:
       annotations:
         rollme: "{{ now | unixEpoch }}"
     spec:
+      imagePullSecrets:
+        {{- toYaml .Values.imagePullSecrets | nindent 8 }}
       containers:
         - name: web-main
           image: "{{ .Values.ecr_repository }}/{{ .Values.webmain.name }}:{{ .Values.webmain.tag }}"
