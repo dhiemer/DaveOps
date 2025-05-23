@@ -61,7 +61,7 @@ jobs:
 
       - name: Build & push consumer image
         run: |
-          docker buildx build --platform linux/arm64 \
+          docker buildx build --platform linux/amd64 \
             --tag ${{ steps.login-ecr.outputs.registry }}/consumer:latest \
             --push ./Application/consumer
 
@@ -80,7 +80,7 @@ jobs:
         id: login-ecr
       - name: Build & push producer image
         run: |
-          docker buildx build --platform linux/arm64 \
+          docker buildx build --platform linux/amd64 \
             --tag ${{ steps.login-ecr.outputs.registry }}/producer:latest \
             --push ./Application/producer
 
@@ -99,7 +99,7 @@ jobs:
         id: login-ecr
       - name: Build & push alert‑dispatcher‑svc image
         run: |
-          docker buildx build --platform linux/arm64 \
+          docker buildx build --platform linux/amd64 \
             --tag ${{ steps.login-ecr.outputs.registry }}/alert-dispatcher-svc:latest \
             --push ./Application/alert-dispatcher-svc
 
@@ -118,7 +118,7 @@ jobs:
         id: login-ecr
       - name: Build & push quake‑detector‑svc image
         run: |
-          docker buildx build --platform linux/arm64 \
+          docker buildx build --platform linux/amd64 \
             --tag ${{ steps.login-ecr.outputs.registry }}/quake-detector-svc:latest \
             --push ./Application/quake-detector-svc
 
@@ -137,7 +137,7 @@ jobs:
         id: login-ecr
       - name: Build & push web‑earthquakes image
         run: |
-          docker buildx build --platform linux/arm64 \
+          docker buildx build --platform linux/amd64 \
             --tag ${{ steps.login-ecr.outputs.registry }}/web-earthquakes:latest \
             --push ./Application/web/earthquakes
 

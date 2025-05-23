@@ -40,6 +40,6 @@ jobs:
         id: login-ecr
       - name: Build & push producer image
         run: |
-          docker buildx build --platform linux/arm64 \
+          docker buildx build --platform linux/amd64 \
             --tag ${{ steps.login-ecr.outputs.registry }}/producer:latest \
             --push ./Application/producer
