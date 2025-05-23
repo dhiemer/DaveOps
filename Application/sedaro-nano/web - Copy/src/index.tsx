@@ -24,7 +24,8 @@ const router = createBrowserRouter([
 const root = ReactDOM.createRoot(document.getElementById('root')!);
 root.render(
   <React.StrictMode>
-    <Theme appearance="dark" accentColor="iris" grayColor="mauve" radius="small">
+    {/* Theme: https://www.radix-ui.com/themes/docs/theme/overview */}
+    <Theme appearance='dark' accentColor='iris' grayColor='mauve' radius='small'>
       <RouterProvider router={router} />
     </Theme>
   </React.StrictMode>
