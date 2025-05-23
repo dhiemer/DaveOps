@@ -5,6 +5,7 @@ ecr_repository: 032021926264.dkr.ecr.us-east-1.amazonaws.com
 webmain:
   name: web-main
   pullPolicy: Always
-
+  tag: latest
+  
 imagePullSecrets:
   - name: ecr-creds
