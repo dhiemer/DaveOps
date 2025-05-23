@@ -43,7 +43,7 @@ jobs:
         id: login-ecr
       - name: Build/Push [web] image
         run: |
-          docker build -t $ECR_REPO/sedaro-web:$IMAGE_TAG ./sedaro-nano/web
+          docker build -t $ECR_REPO/sedaro-web:$IMAGE_TAG ./Application/sedaro-nano/web
           docker push $ECR_REPO/sedaro-web:$IMAGE_TAG
 
   build-app:
@@ -61,5 +61,5 @@ jobs:
         id: login-ecr
       - name: Build/Push [app] image
         run: |
-          docker build -t $ECR_REPO/sedaro-app:$IMAGE_TAG ./sedaro-nano/app
+          docker build -t $ECR_REPO/sedaro-app:$IMAGE_TAG ./Application/sedaro-nano/app
           docker push $ECR_REPO/sedaro-app:$IMAGE_TAG
