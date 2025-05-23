@@ -12,6 +12,8 @@ spec:
       labels:
         app: quake-detector-svc
     spec:
+      imagePullSecrets:
+        {{- toYaml .Values.imagePullSecrets | nindent 8 }}
       containers:
         - name: quake-detector-svc
           image: "{{ .Values.ecr_repository }}/{{ .Values.quakedetectorsvc.name }}:{{ .Values.quakedetectorsvc.tag }}"

@@ -12,6 +12,8 @@ spec:
       labels:
         app: producer
     spec:
+      imagePullSecrets:
+        {{- toYaml .Values.imagePullSecrets | nindent 8 }}
       containers:
         - name: producer
           image: "{{ .Values.ecr_repository }}/{{ .Values.producer.name }}:{{ .Values.producer.tag }}"

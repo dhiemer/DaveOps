@@ -12,6 +12,8 @@ spec:
       labels:
         app: consumer
     spec:
+      imagePullSecrets:
+        {{- toYaml .Values.imagePullSecrets | nindent 8 }}
       containers:
         - name: consumer
           image: "{{ .Values.ecr_repository }}/{{ .Values.consumer.name }}:{{ .Values.consumer.tag }}"

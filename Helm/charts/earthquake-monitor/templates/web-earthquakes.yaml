@@ -18,6 +18,8 @@ spec:
         #- name: nginx-config
         #  configMap:
         #    name: nginx-config
+      imagePullSecrets:
+        {{- toYaml .Values.imagePullSecrets | nindent 8 }}
       containers:
         - name: web-earthquakes
           image: "{{ .Values.ecr_repository }}/{{ .Values.webearthquakes.name }}:{{ .Values.webearthquakes.tag }}"

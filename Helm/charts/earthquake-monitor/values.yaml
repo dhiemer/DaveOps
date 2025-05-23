@@ -35,3 +35,4 @@ webearthquakes:
 
 imagePullSecrets:
   - name: ecr-creds
+
