@@ -22,25 +22,15 @@ locals {
         }
       ]
     }
-    sedaro-web = {
+    sedaro-nano = {
       url      = "sedaro-nano.daveops.pro"
       priority = 300
-      Port     = 30180
+      Port     = 30181
+      health_check_path = "/api/simulation"
       conditions = [
         {
           type   = "host_header"
           values = ["sedaro-nano.daveops.pro"]
-        }
-      ]
-    }
-    sedaro-api = {
-      url      = "sedaro-nano.daveops.pro"
-      priority = 301
-      Port     = 30181
-      conditions = [
-        {
-          type   = "path_pattern"
-          values = ["/simulation"]
         }
       ]
     }
@@ -146,7 +136,7 @@ resource "aws_lb_target_group" "this" {
   vpc_id   = aws_vpc.main.id
 
   health_check {
-    path                = each.key == "sedaro-api" ? "/simulation" : "/"
+    path                = lookup(each.value, "health_check_path", "/")
     protocol            = "HTTP"
     matcher             = "200-399"
     interval            = 30
