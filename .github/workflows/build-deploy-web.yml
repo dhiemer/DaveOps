@@ -1,11 +1,12 @@
 name: Build and Deploy
 
 on:
-  push:
-    branches:
-      - awsv2
-    paths:
-      - 'Application/web/main/**'
+  #push:
+  #  branches:
+  #    - awsv2
+  #  paths:
+  #    - 'Application/web/main/**'
+  workflow_dispatch:  # Enables manual "Run workflow" button in GitHub UI
 
 # Shared environment values
 env:

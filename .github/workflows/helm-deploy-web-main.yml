@@ -1,0 +1,49 @@
+name: Build and Deploy
+
+on:
+  #push:
+  #  branches:
+  #    - awsv2
+  workflow_dispatch:  # Enables manual "Run workflow" button in GitHub UI
+
+# Shared environment values
+env:
+  AWS_REGION: us-east-1
+  ROLE_TO_ASSUME: arn:aws:iam::032021926264:role/github_actions
+
+jobs:
+
+########################################################
+#   
+#   ██████╗ ███████╗██████╗ ██╗      ██████╗ ██╗   ██╗
+#   ██╔══██╗██╔════╝██╔══██╗██║     ██╔═══██╗╚██╗ ██╔╝
+#   ██║  ██║█████╗  ██████╔╝██║     ██║   ██║ ╚████╔╝ 
+#   ██║  ██║██╔══╝  ██╔═══╝ ██║     ██║   ██║  ╚██╔╝  
+#   ██████╔╝███████╗██║     ███████╗╚██████╔╝   ██║   
+#   ╚═════╝ ╚══════╝╚═╝     ╚══════╝ ╚═════╝    ╚═╝   
+#                    
+########################################################
+  deploy:
+    #needs:
+    #  - build-web-main
+    #  #- build-web-earthquakes
+    #  #- build-consumer
+    #  #- build-producer
+    #  #- build-quake-detector-svc
+    #  #- build-alert-dispatcher-svc
+    runs-on: [self-hosted, daveops]
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: azure/setup-helm@v3
+      - uses: azure/setup-kubectl@v3
+
+      - name: Deploy Helm chart
+        run: |
+          export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
+          helm upgrade --install daveops ./Helm/charts/daveops \
+            --namespace default \
+            --set web-main.image.repository=032021926264.dkr.ecr.us-east-1.amazonaws.com/web-main --set webmain.tag=latest \
+            --timeout 3m
+
+
