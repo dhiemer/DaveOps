@@ -1,4 +1,4 @@
-name: helm-deploy-web-main
+name: Web Deploy
 
 on:
   #push:

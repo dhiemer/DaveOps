@@ -1,4 +1,4 @@
-name: build-deploy-web
+name: Earthquake Build Web
 
 on:
   #push:
@@ -25,7 +25,7 @@ jobs:
 # 
 ########################################################
 
-  build-web-main:
+  build-web-earthquakes:
     runs-on: ubuntu-latest
     permissions: { id-token: write, contents: read }
     steps:
@@ -38,14 +38,9 @@ jobs:
       - uses: docker/setup-buildx-action@v3
       - uses: aws-actions/amazon-ecr-login@v2
         id: login-ecr
-      #- name: Build & push web‑main image
-      #  run: |
-      #    docker buildx build --platform linux/arm64 \
-      #      --tag ${{ steps.login-ecr.outputs.registry }}/web-main:latest \
-      #      --push ./Application/web/main
-      - name: Build & push web‑main image
+      - name: Build & push web‑earthquakes image
         run: |
-          docker buildx build --platform linux/amd64,linux/arm64 \
-            --tag ${{ steps.login-ecr.outputs.registry }}/web-main:latest \
-            --push ./Application/web/main
+          docker buildx build --platform linux/arm64 \
+            --tag ${{ steps.login-ecr.outputs.registry }}/web-earthquakes:latest \
+            --push ./Application/web/earthquakes
 

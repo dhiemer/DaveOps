@@ -1,0 +1,143 @@
+name: Earthquake Build ALL
+
+on:
+  #push:
+  #  branches:
+  #    - awsv2
+  #  paths:
+  #    - 'Application/web/main/**'
+  workflow_dispatch:  # Enables manual "Run workflow" button in GitHub UI
+
+# Shared environment values
+env:
+  AWS_REGION: us-east-1
+  ROLE_TO_ASSUME: arn:aws:iam::032021926264:role/github_actions
+
+jobs:
+########################################################
+#   
+#   ██████╗ ██╗   ██╗██╗██╗     ██████╗ 
+#   ██╔══██╗██║   ██║██║██║     ██╔══██╗
+#   ██████╔╝██║   ██║██║██║     ██║  ██║
+#   ██╔══██╗██║   ██║██║██║     ██║  ██║
+#   ██████╔╝╚██████╔╝██║███████╗██████╔╝
+#   ╚═════╝  ╚═════╝ ╚═╝╚══════╝╚═════╝ 
+# 
+########################################################
+
+  build-consumer:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - uses: actions/checkout@v3
+
+
+      - name: Dump OIDC token claims
+        env:
+          AUDIENCE: sts.amazonaws.com    # <- same value you pass to configure‑aws‑credentials
+        run: |
+          echo "🔑 Requesting OIDC token for audience: $AUDIENCE"
+          # GitHub exposes two env vars that let us fetch the token directly
+          TOKEN_JSON=$(curl -sH "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" \
+                             "$ACTIONS_ID_TOKEN_REQUEST_URL&audience=${AUDIENCE}")
+          ID_TOKEN=$(echo "$TOKEN_JSON" | jq -r '.value')
+      
+          echo "🪪 JWT claims:"
+          echo "$ID_TOKEN" | cut -d '.' -f2 | base64 -d 2>/dev/null | jq .
+      
+          
+      - uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ env.ROLE_TO_ASSUME }}
+          aws-region: ${{ env.AWS_REGION }}
+          audience: sts.amazonaws.com          # <- pin the aud claim
+
+      - uses: docker/setup-buildx-action@v3
+
+      - uses: aws-actions/amazon-ecr-login@v2
+        id: login-ecr
+
+      - name: Build & push consumer image
+        run: |
+          docker buildx build --platform linux/arm64 \
+            --tag ${{ steps.login-ecr.outputs.registry }}/consumer:latest \
+            --push ./Application/consumer
+
+  build-producer:
+    runs-on: ubuntu-latest
+    permissions: { id-token: write, contents: read }
+    steps:
+      - uses: actions/checkout@v3
+      - uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ env.ROLE_TO_ASSUME }}
+          aws-region: ${{ env.AWS_REGION }}
+          audience: sts.amazonaws.com
+      - uses: docker/setup-buildx-action@v3
+      - uses: aws-actions/amazon-ecr-login@v2
+        id: login-ecr
+      - name: Build & push producer image
+        run: |
+          docker buildx build --platform linux/arm64 \
+            --tag ${{ steps.login-ecr.outputs.registry }}/producer:latest \
+            --push ./Application/producer
+
+  build-alert-dispatcher-svc:
+    runs-on: ubuntu-latest
+    permissions: { id-token: write, contents: read }
+    steps:
+      - uses: actions/checkout@v3
+      - uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ env.ROLE_TO_ASSUME }}
+          aws-region: ${{ env.AWS_REGION }}
+          audience: sts.amazonaws.com
+      - uses: docker/setup-buildx-action@v3
+      - uses: aws-actions/amazon-ecr-login@v2
+        id: login-ecr
+      - name: Build & push alert‑dispatcher‑svc image
+        run: |
+          docker buildx build --platform linux/arm64 \
+            --tag ${{ steps.login-ecr.outputs.registry }}/alert-dispatcher-svc:latest \
+            --push ./Application/alert-dispatcher-svc
+
+  build-quake-detector-svc:
+    runs-on: ubuntu-latest
+    permissions: { id-token: write, contents: read }
+    steps:
+      - uses: actions/checkout@v3
+      - uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ env.ROLE_TO_ASSUME }}
+          aws-region: ${{ env.AWS_REGION }}
+          audience: sts.amazonaws.com
+      - uses: docker/setup-buildx-action@v3
+      - uses: aws-actions/amazon-ecr-login@v2
+        id: login-ecr
+      - name: Build & push quake‑detector‑svc image
+        run: |
+          docker buildx build --platform linux/arm64 \
+            --tag ${{ steps.login-ecr.outputs.registry }}/quake-detector-svc:latest \
+            --push ./Application/quake-detector-svc
+
+  build-web-earthquakes:
+    runs-on: ubuntu-latest
+    permissions: { id-token: write, contents: read }
+    steps:
+      - uses: actions/checkout@v3
+      - uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ env.ROLE_TO_ASSUME }}
+          aws-region: ${{ env.AWS_REGION }}
+          audience: sts.amazonaws.com
+      - uses: docker/setup-buildx-action@v3
+      - uses: aws-actions/amazon-ecr-login@v2
+        id: login-ecr
+      - name: Build & push web‑earthquakes image
+        run: |
+          docker buildx build --platform linux/arm64 \
+            --tag ${{ steps.login-ecr.outputs.registry }}/web-earthquakes:latest \
+            --push ./Application/web/earthquakes
+
