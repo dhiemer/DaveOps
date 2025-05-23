@@ -32,7 +32,7 @@ spec:
       containers:
         - name: app
           image: "{{ .Values.ecr_repository }}/sedaro-app:{{ .Values.app.tag }}"
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           ports:
             - containerPort: 8000
           resources:
@@ -91,7 +91,7 @@ spec:
       containers:
         - name: web
           image: "{{ .Values.ecr_repository }}/sedaro-web:{{ .Values.web.tag }}"
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           ports:
             - containerPort: 3030
           resources:
