@@ -26,8 +26,13 @@ spec:
             - name: SMTP_USER
               value: "steezyalerts@gmail.com"
             - name: SMTP_PASS
-              value: "rxxaoectekfzboct"
+              #kubectl create secret generic smtp-secret --from-literal=SMTP_PASS=...
+              valueFrom:
+                secretKeyRef:
+                  name: smtp-secret
+                  key: SMTP_PASS
             - name: ALERT_RECIPIENTS
               value: "steezyalerts@gmail.com,hiemer.david@gmail.com"
           ports:
             - containerPort: 80
+

@@ -12,6 +12,6 @@ variable "github_owner" {
 
 variable "github_repo" {
   description = "github_repo"
-  default   = "https://github.com/dhiemer/earthquake-monitor"
+  default   = "https://github.com/dhiemer/daveops"
 }
 

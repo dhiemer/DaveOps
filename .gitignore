@@ -400,6 +400,10 @@ FodyWeavers.xsd
 *.sln.iml
 
 _Dave/
+Terraform-bak/
+Terraform_sedaro/
+Helm_bak/
+
 Terraform/.terraform/
 Terraform/.terraform.lock.hcl
 Terraform/.terraform.tfstate.lock.info

@@ -5,7 +5,7 @@ body {
   padding: 0 10px;
   margin: 0;
   font-family: 'Nunito', sans-serif;
-  background: url('legoback.png') repeat;
+  background: url('assets/legoback.png') repeat;
   background-size: 50%;
   color: #111;
 }

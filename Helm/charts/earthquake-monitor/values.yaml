@@ -1,13 +1,12 @@
 kafkaImage: bitnami/kafka:latest
 producerImage: earthquake-producer:latest
 consumerImage: localhost:5000/earthquake-consumer:latest
-webImage: localhost:5000/earthquake-web:latest
 
 
 ecr_repository: 032021926264.dkr.ecr.us-east-1.amazonaws.com
 
-imagePullSecrets:
-  - name: ecr-pull
+#imagePullSecrets:
+#  - name: ecr-pull
 
 producer:
   name: producer
@@ -29,12 +28,10 @@ alertdispatchersvc:
   tag: latest
   pullPolicy: Always
 
-webmain:
-  name: web-main
-  pullPolicy: Always
-
 webearthquakes:
   name: web-earthquakes
   pullPolicy: Always
 
 
+imagePullSecrets:
+  - name: ecr-creds

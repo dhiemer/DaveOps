@@ -3,7 +3,9 @@ name: Build and Deploy
 on:
   push:
     branches:
-      - aws
+      - awsv2
+    paths:
+      - 'Application/web/main/**'
 
 # Shared environment values
 env:
@@ -35,47 +37,14 @@ jobs:
       - uses: docker/setup-buildx-action@v3
       - uses: aws-actions/amazon-ecr-login@v2
         id: login-ecr
+      #- name: Build & push web‑main image
+      #  run: |
+      #    docker buildx build --platform linux/arm64 \
+      #      --tag ${{ steps.login-ecr.outputs.registry }}/web-main:latest \
+      #      --push ./Application/web/main
       - name: Build & push web‑main image
         run: |
-          docker buildx build --platform linux/arm64 \
+          docker buildx build --platform linux/amd64,linux/arm64 \
             --tag ${{ steps.login-ecr.outputs.registry }}/web-main:latest \
             --push ./Application/web/main
 
-
-########################################################
-#   
-#   ██████╗ ███████╗██████╗ ██╗      ██████╗ ██╗   ██╗
-#   ██╔══██╗██╔════╝██╔══██╗██║     ██╔═══██╗╚██╗ ██╔╝
-#   ██║  ██║█████╗  ██████╔╝██║     ██║   ██║ ╚████╔╝ 
-#   ██║  ██║██╔══╝  ██╔═══╝ ██║     ██║   ██║  ╚██╔╝  
-#   ██████╔╝███████╗██║     ███████╗╚██████╔╝   ██║   
-#   ╚═════╝ ╚══════╝╚═╝     ╚══════╝ ╚═════╝    ╚═╝   
-#                    
-########################################################
-  deploy:
-    needs:
-      - build-web-main
-      #- build-web-earthquakes
-      #- build-consumer
-      #- build-producer
-      #- build-quake-detector-svc
-      #- build-alert-dispatcher-svc
-    runs-on: [self-hosted, Linux, ARM64, k3s]
-    steps:
-      - uses: actions/checkout@v3
-
-      - uses: azure/setup-helm@v3
-      - uses: azure/setup-kubectl@v3
-
-      - name: Deploy Helm chart
-        run: |
-          export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
-          helm upgrade --install earthquake-monitor ./Helm/charts/earthquake-monitor \
-            --namespace default \
-            --set producer.image.repository=032021926264.dkr.ecr.us-east-1.amazonaws.com/producer --set producer.image.tag=latest \
-            --set consumer.image.repository=032021926264.dkr.ecr.us-east-1.amazonaws.com/consumer --set consumer.image.tag=latest \
-            --set quake-detector-svc.image.repository=032021926264.dkr.ecr.us-east-1.amazonaws.com/quake-detector-svc --set quakedetectorsvc.tag=latest \
-            --set alert-dispatcher-svc.image.repository=032021926264.dkr.ecr.us-east-1.amazonaws.com/alert-dispatcher-svc --set alertdispatchersvc.tag=latest \
-            --set web-main.image.repository=032021926264.dkr.ecr.us-east-1.amazonaws.com/web-main --set webmain.tag=latest \
-            --set web-earthquakes.image.repository=032021926264.dkr.ecr.us-east-1.amazonaws.com/web-earthquakes --set webearthquakes.tag=latest \
-            --timeout 3m
