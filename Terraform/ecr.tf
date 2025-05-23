@@ -11,8 +11,8 @@ locals {
       expire_untagged_days = 14
       max_image_count      = 5
     },
-    web = {
-      name                 = "web"
+    web-main = {
+      name                 = "web-main"
       expire_untagged_days = 14
       max_image_count      = 5
     },
