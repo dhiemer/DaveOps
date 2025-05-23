@@ -1,0 +1,52 @@
+name: Sedaro Deploy
+
+on:
+  #push:
+  #  branches:
+  #    - awsv2
+  #  paths:
+  #    - 'Application/web/main/**'
+  workflow_dispatch:  # Enables manual "Run workflow" button in GitHub UI
+
+# Shared environment values
+env:
+  AWS_REGION: us-east-1
+  ROLE_TO_ASSUME: arn:aws:iam::032021926264:role/sedaro_github_actions
+  ECR_REPO: 032021926264.dkr.ecr.us-east-1.amazonaws.com
+  #IMAGE_TAG: ${{ github.sha }}
+  IMAGE_TAG: latest
+
+jobs:
+
+########################################################
+#   
+#   ██████╗ ███████╗██████╗ ██╗      ██████╗ ██╗   ██╗
+#   ██╔══██╗██╔════╝██╔══██╗██║     ██╔═══██╗╚██╗ ██╔╝
+#   ██║  ██║█████╗  ██████╔╝██║     ██║   ██║ ╚████╔╝ 
+#   ██║  ██║██╔══╝  ██╔═══╝ ██║     ██║   ██║  ╚██╔╝  
+#   ██████╔╝███████╗██║     ███████╗╚██████╔╝   ██║   
+#   ╚═════╝ ╚══════╝╚═╝     ╚══════╝ ╚═════╝    ╚═╝   
+#                    
+########################################################
+  deploy:
+    runs-on: [self-hosted, daveops]
+    steps:
+      - uses: actions/checkout@v3
+      - uses: azure/setup-helm@v3
+      - uses: azure/setup-kubectl@v3
+
+      - name: Pull Helm dependencies
+        run: |
+          cd Helm/charts/sedaro-demo
+          helm dependency update
+
+      - name: Deploy Helm chart
+        run: |
+          export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
+          helm upgrade --install sedaro-demo ./Helm/charts/sedaro-demo \
+            --namespace default \
+            --set ecr_repository=$ECR_REPO \
+            --set web.tag=$IMAGE_TAG \
+            --set app.tag=$IMAGE_TAG \
+            --timeout 3m
+
