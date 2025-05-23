@@ -63,7 +63,7 @@ namespace AlertDispatcherService
 
                             var quakeId = root.GetProperty("id").GetString(); // Use ID to deduplicate
 
-                            if (magnitude >= 4.0)
+                            if (magnitude >= 6.0)
                             {
                                 if (quakeId != null && !_sentAlerts.Contains(quakeId))
                                 {

@@ -3,38 +3,38 @@ locals {
   ecr_repositories = {
     producer = {
       name                 = "producer"
-      expire_untagged_days = 5
-      max_image_count      = 7
+      expire_untagged_days = 14
+      max_image_count      = 5
     },
     consumer = {
       name                 = "consumer"
-      expire_untagged_days = 5
-      max_image_count      = 7
+      expire_untagged_days = 14
+      max_image_count      = 5
     },
     web = {
       name                 = "web"
-      expire_untagged_days = 5
-      max_image_count      = 7
+      expire_untagged_days = 14
+      max_image_count      = 5
     },
     quake-detector-svc = {
       name                 = "quake-detector-svc"
-      expire_untagged_days = 5
-      max_image_count      = 7
+      expire_untagged_days = 14
+      max_image_count      = 5
     },
     alert-dispatcher-svc = {
       name                 = "alert-dispatcher-svc"
-      expire_untagged_days = 5
-      max_image_count      = 7
+      expire_untagged_days = 14
+      max_image_count      = 5
     },
     sedaro-web = {
       name                 = "sedaro-web"
-      expire_untagged_days = 5
-      max_image_count      = 7
+      expire_untagged_days = 14
+      max_image_count      = 5
     },
     sedaro-app = {
       name                 = "sedaro-app"
-      expire_untagged_days = 5
-      max_image_count      = 7
+      expire_untagged_days = 14
+      max_image_count      = 5
     }
 
   }
