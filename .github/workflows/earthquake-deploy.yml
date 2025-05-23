@@ -32,7 +32,7 @@ jobs:
     #  - build-producer
     #  - build-quake-detector-svc
     #  - build-alert-dispatcher-svc
-    runs-on: [self-hosted, Linux, ARM64, k3s]
+    runs-on: [self-hosted, daveops]
     steps:
       - uses: actions/checkout@v3
 
