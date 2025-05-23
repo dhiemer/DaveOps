@@ -1,5 +1,6 @@
 locals {
   sites = {
+
     main = {
       url      = "daveops.pro"
       priority = 100
@@ -11,6 +12,7 @@ locals {
         }
       ]
     }
+
     earthquakes = {
       url      = "earthquakes.daveops.pro"
       priority = 200
@@ -22,9 +24,10 @@ locals {
         }
       ]
     }
+
     sedaro-web = {
       url      = "sedaro-nano.daveops.pro"
-      priority = 300
+      priority = 310
       Port     = 30180
       conditions = [
         {
@@ -33,17 +36,23 @@ locals {
         }
       ]
     }
+
     sedaro-api = {
       url      = "sedaro-nano.daveops.pro"
       priority = 301
       Port     = 30181
       conditions = [
         {
+          type   = "host_header"
+          values = ["sedaro-nano.daveops.pro"]
+        },
+        {
           type   = "path_pattern"
           values = ["/simulation"]
         }
       ]
     }
+
     sedaro-grafana = {
       url      = "sedaro-nano.daveops.pro"
       priority = 302
@@ -59,6 +68,7 @@ locals {
         }
       ]
     }
+    
   }
 }
 
