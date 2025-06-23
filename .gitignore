@@ -419,3 +419,105 @@ Notes
 
 *.drawio.bkp
 *.drawio.dtmp
+
+
+
+
+# Local .terraform directories
+.terraform/
+
+# Terraform state files
+*.tfstate
+*.tfstate.*
+
+# Crash log files
+crash.log
+
+# Sensitive variable files
+*.tfvars
+*.tfvars.json
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# CLI configuration
+.terraformrc
+terraform.rc
+
+# Terraform plan files
+*.tfplan
+
+# Provider logs (if enabled)
+*.log
+
+# Ignore backups created by Terraform
+*.backup
+
+# VSCode
+.vscode/
+
+# MacOS
+.DS_Store
+
+# Optional: ignore lock file if you're okay regenerating it each clone (not recommended in teams)
+# terraform.lock.hcl
+
+
+# Ignore all .terraform directories anywhere in the repo
+**/.terraform/
+
+# Ignore all terraform state files (and backups) anywhere
+**/*.tfstate
+**/*.tfstate.*
+**/*.backup
+
+# Ignore plan output files
+**/*.tfplan
+
+# Ignore tfvars and override files (potentially sensitive)
+**/*.tfvars
+**/*.tfvars.json
+**/override.tf
+**/override.tf.json
+**/*_override.tf
+**/*_override.tf.json
+
+# Terraform CLI config files (usually in $HOME but added just in case)
+.terraformrc
+terraform.rc
+
+# Editor and OS-specific files
+.vscode/
+.DS_Store
+
+
+
+# Ignore all .terraform directories anywhere in the repo
+**/.terraform/
+
+# Ignore all terraform state files (and backups) anywhere
+**/*.tfstate
+**/*.tfstate.*
+**/*.backup
+
+# Ignore plan output files
+**/*.tfplan
+
+# Ignore tfvars and override files (potentially sensitive)
+**/*.tfvars
+**/*.tfvars.json
+**/override.tf
+**/override.tf.json
+**/*_override.tf
+**/*_override.tf.json
+
+# Terraform CLI config files (usually in $HOME but added just in case)
+.terraformrc
+terraform.rc
+
+# Editor and OS-specific files
+.vscode/
+.DS_Store
+
+
